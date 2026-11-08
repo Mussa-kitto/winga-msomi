@@ -524,8 +524,6 @@ footer {
   .pprice { font-size: .98rem; }
   .btn-order { justify-content: center; width: 100%; padding: 9px 8px; font-size: .78rem; }
   .pbadge { top: 8px; left: 8px; padding: 3px 8px; font-size: .6rem; }
-  .flt-chat { right: 14px; bottom: 14px; }
-  .flt-chat-text { font-size: .78rem; }
 }
 
 /* ================================================================
@@ -975,7 +973,6 @@ body.cart-open { overflow: hidden; }
   .pd-sticky-chat { border: 2px solid var(--blue); color: var(--blue); background: var(--white); }
   .pd-sticky-order { background: var(--green); color: #fff; }
   body.has-sticky { padding-bottom: 76px; }
-  body.page-product .flt-chat { display: none; } /* sticky bar replaces it */
   body.has-sticky .wm-toast { bottom: 88px; }
 }
 @media (max-width: 480px) {
@@ -1410,3 +1407,29 @@ body.cart-open { overflow: hidden; }
 }
 footer :where(a, button):focus-visible { outline-color: var(--accent); }
 .cat-btn:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+
+/* ================================================================
+   FLOATING "OMBA BIDHAA / ULIZA" — keep it from covering things
+   (only on index.html; product.html has its own chat buttons)
+   ================================================================ */
+/* Footer's last row stays clear of the button */
+body.has-float .ft-btm { padding-bottom: 88px; }
+/* Hidden while the cart drawer is open (drawer has its own WhatsApp button) */
+body.cart-open .flt-chat { display: none; }
+/* Phones/tablets: compact round icon so it covers as little as possible */
+@media (max-width: 768px) {
+  .flt-chat { right: 14px; bottom: 14px; width: 54px; height: 54px; min-height: 0; padding: 0; justify-content: center; }
+  .flt-chat-icon { width: 42px; height: 42px; }
+  .flt-chat-text {
+    position: absolute; width: 1px; height: 1px; overflow: hidden;
+    clip: rect(0 0 0 0); white-space: nowrap; /* still read by screen readers */
+  }
+  body.has-float .ft-btm { padding-bottom: 76px; }
+}
+/* Steps out of the way while something clickable is under it (js/main.js) */
+.flt-chat { transition: opacity .2s ease, transform .2s ease, visibility 0s linear 0s; }
+.flt-chat.flt-away {
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transform: translateY(12px) scale(.92);
+  transition: opacity .2s ease, transform .2s ease, visibility 0s linear .2s;
+}
