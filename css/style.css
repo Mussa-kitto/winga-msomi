@@ -37,19 +37,6 @@ body {
   overflow-x: hidden;
 }
 
-/* ── TOPBAR ──────────────────────────────────────────────────── */
-.topbar {
-  background: linear-gradient(90deg, var(--blue) 0%, #2563eb 50%, var(--blue-dark) 100%);
-  color: #fff;
-  text-align: center;
-  padding: 9px 16px;
-  font-size: .83rem;
-  font-weight: 500;
-  letter-spacing: .01em;
-  z-index: 1001;
-  position: relative;
-}
-.topbar strong { font-weight: 800; }
 
 /* ── SECTION COMMON ──────────────────────────────────────────── */
 .sec { padding: 76px 24px; }
@@ -408,30 +395,28 @@ footer {
 }
 .ft-btm i { color: #ef4444; }
 
-/* ── FLOATING WHATSAPP ───────────────────────────────────────── */
+/* ── FLOATING "OMBA BIDHAA / ULIZA" (WhatsApp green, like the other WhatsApp buttons) ── */
 .flt-chat {
   position: fixed;
   bottom: 28px;
   right: 28px;
-  min-height: 56px;
+  min-height: 54px;
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  padding: 8px 9px 8px 18px;
-  background: var(--dark);
+  gap: 10px;
+  padding: 6px 18px 6px 6px;
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-dk) 100%);
   color: #fff;
-  border: 1px solid rgba(255,255,255,.16);
+  border: 2px solid #fff;
   border-radius: 999px;
-  box-shadow: 0 12px 34px rgba(15,23,42,.28);
+  box-shadow: 0 10px 28px rgba(30,173,85,.38), 0 2px 6px rgba(15,23,42,.12);
   z-index: 999;
   text-decoration: none;
   transition: var(--tr);
-  animation: float-bounce 3.5s ease-in-out infinite;
 }
 .flt-chat:hover {
   transform: translateY(-3px);
-  box-shadow: 0 16px 42px rgba(15,23,42,.36);
-  animation: none;
+  box-shadow: 0 14px 34px rgba(30,173,85,.48), 0 2px 6px rgba(15,23,42,.12);
 }
 .flt-chat-text {
   font-family: 'Sora', sans-serif;
@@ -439,20 +424,33 @@ footer {
   font-weight: 800;
   letter-spacing: 0;
   white-space: nowrap;
+  order: 2; /* icon first, then text */
 }
 .flt-chat-icon {
-  width: 42px;
-  height: 42px;
+  position: relative;
+  width: 40px;
+  height: 40px;
   display: grid;
   place-items: center;
   border-radius: 50%;
-  background: var(--green);
-  box-shadow: 0 6px 18px rgba(37,211,102,.46);
+  background: #fff;
   flex-shrink: 0;
 }
 .flt-chat-icon i {
-  font-size: 1.18rem;
-  color: #fff;
+  font-size: 1.35rem;
+  color: var(--green-dk);
+}
+/* Soft pulse ring to draw attention without bouncing */
+.flt-chat-icon::after {
+  content: '';
+  position: absolute; inset: -4px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,.7);
+  animation: flt-ring 2.4s ease-out infinite;
+}
+@keyframes flt-ring {
+  0%   { transform: scale(.9); opacity: .9; }
+  100% { transform: scale(1.35); opacity: 0; }
 }
 
 /* ── KEYFRAMES ───────────────────────────────────────────────── */
@@ -481,11 +479,6 @@ footer {
   .ft-brand { grid-column: 1 / -1; }
 }
 @media (max-width: 768px) {
-  .topbar {
-    padding: 7px 12px;
-    font-size: .74rem;
-    line-height: 1.45;
-  }
   .sec { padding: 52px 20px; }
   .cat-bar {
     flex-wrap: nowrap;
@@ -507,7 +500,7 @@ footer {
   }
   .ft-grid { grid-template-columns: 1fr; gap: 32px; }
   .ft-btm { flex-direction: column; text-align: center; }
-  .flt-chat { bottom: 20px; right: 20px; min-height: 52px; padding: 7px 8px 7px 15px; }
+  .flt-chat { bottom: 20px; right: 20px; min-height: 50px; padding: 5px 15px 5px 5px; }
   .flt-chat-icon { width: 38px; height: 38px; }
 }
 @media (max-width: 480px) {
@@ -1031,7 +1024,19 @@ body.cart-open { overflow: hidden; }
   box-shadow: 0 4px 14px rgba(26,86,219,.35);
   transition: var(--tr);
 }
-.brand-icon i { color: #fff; font-size: 1.25rem; }
+.brand-icon { position: relative; }
+.brand-icon > i { color: #fff; font-size: 1.3rem; }
+/* Small orange cart badge on the student logo = student marketplace */
+.brand-badge {
+  position: absolute; right: -5px; bottom: -5px;
+  width: 20px; height: 20px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--accent); border: 2px solid #fff;
+}
+.brand-badge i { color: #fff; font-size: .55rem; }
+.brand-text .brand-name em { font-style: normal; color: var(--blue); }
+.ft-brand h2 em { font-style: normal; color: #60a5fa; }
+.ft-brand h2 i { color: var(--accent); }
 .brand:hover .brand-icon { transform: scale(1.07) rotate(-3deg); }
 .brand-text { display: flex; flex-direction: column; }
 .brand-text .brand-tag { font-size: .72rem; color: var(--muted); font-weight: 500; }
@@ -1391,7 +1396,7 @@ body.cart-open { overflow: hidden; }
   .pay-row { flex-wrap: wrap; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hb, .cat-card, .flt-chat { transition: none; animation: none; }
+  .hb, .cat-card, .flt-chat, .flt-chat-icon::after { transition: none; animation: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
 }
 
