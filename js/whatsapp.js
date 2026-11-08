@@ -8,6 +8,7 @@ window.WM = window.WM || {};
 WM.wa = (function () {
   const site = WM.site || {};
   const msg = site.messages || {};
+  const MAX = site.maxLinkLength || 2000;
 
   const digits = s => String(s || '').replace(/\D/g, '');
   const money = n => Number(n || 0).toLocaleString('en-US');
@@ -27,19 +28,28 @@ WM.wa = (function () {
     return text ? `${base}?text=${encodeURIComponent(text)}` : base;
   }
 
+  // Absolute link to a product page (works on any host the site is served from)
+  function productUrl(p) {
+    try { return new URL(`product.html?id=${encodeURIComponent(p.id)}`, location.href).href; }
+    catch (e) { return `product.html?id=${encodeURIComponent(p.id)}`; }
+  }
+
   // General contact link (header, floating button, footer)
   function contactLink(text) {
     return link(site.contactWhatsapp, text === undefined ? msg.general : text);
   }
 
-  // Message for ordering a single product
-  function productOrderText(p) {
-    const line = fill(msg.orderOne, { name: p.name, price: money(p.price) });
-    return p.orderNote ? `${line} ${p.orderNote}` : line;
+  /* Message for ordering one product (quantity optional, default 1) */
+  function productOrderText(p, qty) {
+    qty = qty || 1;
+    const vars = { name: p.name, qty, price: money(p.price), total: money(p.price * qty) };
+    let line = fill(qty > 1 ? msg.orderQty : msg.orderOne, vars);
+    if (p.orderNote) line += ` ${p.orderNote}`;
+    return `${line}\n${productUrl(p)}`;
   }
 
-  function productOrderLink(p) {
-    return link(numberFor(p.sellerId), productOrderText(p));
+  function productOrderLink(p, qty) {
+    return link(numberFor(p.sellerId), productOrderText(p, qty));
   }
 
   // "I couldn't find what I want" request, optionally with the search query
@@ -48,5 +58,44 @@ WM.wa = (function () {
     return contactLink(fill(msg.requestProduct, { query: q }));
   }
 
-  return { numberFor, link, contactLink, productOrderText, productOrderLink, requestLink, money };
+  /* Cart order message for a list of lines [{ product, qty, subtotal }].
+     withLinks=false leaves out product page links (used to shorten long orders). */
+  function cartText(lines, withLinks = true) {
+    const total = lines.reduce((t, l) => t + l.subtotal, 0);
+    const items = lines.map((l, i) => {
+      const p = l.product;
+      let row = fill(msg.cartItem, { n: i + 1, name: p.name, qty: l.qty, price: money(p.price), total: money(l.subtotal) });
+      if (p.orderNote) row += ` ${p.orderNote}`;
+      return withLinks ? `${row}\n${productUrl(p)}` : row;
+    });
+    return [msg.cartGreeting, '', items.join('\n\n'), '', fill(msg.cartTotal, { total: money(total) }), '', msg.buyerDetails].join('\n');
+  }
+
+  /* Split cart lines into one WhatsApp order per receiving number.
+     While forceWhatsappNumber is set, everything is one combined order.
+     Returns [{ number, sellers: [names], lines, total, url, tooLong }] */
+  function cartOrders(lines) {
+    const groups = [];
+    lines.forEach(l => {
+      const number = numberFor(l.product.sellerId);
+      let g = groups.find(x => x.number === number);
+      if (!g) groups.push(g = { number, sellerIds: [], lines: [] });
+      if (!g.sellerIds.includes(l.product.sellerId)) g.sellerIds.push(l.product.sellerId);
+      g.lines.push(l);
+    });
+    return groups.map(g => {
+      let url = link(g.number, cartText(g.lines));
+      if (url.length > MAX) url = link(g.number, cartText(g.lines, false)); // drop links first
+      return {
+        number: g.number,
+        sellers: g.sellerIds.map(id => ((WM.sellers || []).find(s => s.id === id) || { name: id }).name),
+        lines: g.lines,
+        total: g.lines.reduce((t, l) => t + l.subtotal, 0),
+        url,
+        tooLong: url.length > MAX
+      };
+    });
+  }
+
+  return { numberFor, link, productUrl, contactLink, productOrderText, productOrderLink, requestLink, cartText, cartOrders, money };
 })();

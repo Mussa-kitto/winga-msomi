@@ -26,8 +26,18 @@ WM.site = {
   messages: {
     general: "Habari! Nataka kuorder kutoka WINGA MSOMI",
     orderOne: "Nataka {name} - TZS {price}",
-    requestProduct: "Habari! Nimekosa bidhaa ninayoitaka kwenye website.{query} Naomba msaada wa kuipata."
+    requestProduct: "Habari! Nimekosa bidhaa ninayoitaka kwenye website.{query} Naomba msaada wa kuipata.",
+    // Single product with a quantity > 1
+    orderQty: "Nataka {name} x{qty} - TZS {total} (TZS {price} kila moja)",
+    // Cart order: greeting, numbered items, total, then buyer details
+    cartGreeting: "Habari! Nataka kuagiza:",
+    cartItem: "{n}) {name} x{qty} — TZS {total} (TZS {price} kila moja)",
+    cartTotal: "Jumla: TZS {total}",
+    buyerDetails: "Jina langu: \nHostel/Mahali nilipo: "
   },
+
+  // wa.me links longer than this are refused; the buyer is asked to split the order.
+  maxLinkLength: 2000,
 
   // Card badges: key used in products.js -> label + icon + css modifier.
   badges: {

@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const catBar = document.querySelector('.cat-bar');
   if (catBar) WM.render.catBar(catBar);
   if (pgrid) WM.render.grid(pgrid, WM.catalog.visible());
+  WM.cartUI.mount(); // cart drawer, header badge, "Ongeza kwenye Cart" buttons
 
   /* ── HAMBURGER MENU ──────────────────────────────────────────── */
   const ham     = document.getElementById('ham');

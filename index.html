@@ -211,6 +211,12 @@
         Order via WhatsApp
       </a>
 
+      <!-- Cart (opens the cart drawer; badge updated by js/render.js) -->
+      <button type="button" class="nav-cart" data-cart-open aria-controls="cartDrawer" aria-expanded="false" aria-label="Fungua cart">
+        <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+        <span class="cart-badge" data-cart-count hidden>0</span>
+      </button>
+
       <!-- Hamburger (mobile) -->
       <button class="hamburger" id="ham" aria-label="Fungua menyu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -644,6 +650,7 @@
   <script src="js/data/banners.js"></script>
   <script src="js/whatsapp.js"></script>
   <script src="js/render.js"></script>
+  <script src="js/store.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
