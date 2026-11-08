@@ -6,7 +6,7 @@ WM.sellers = [
     id: "winga-msomi",
     name: "Winga Msomi",
     whatsapp: "255687602205",
-    area: "UDOM, Dodoma",
+    area: "UDOM-CIVE College, Dodoma",
     about: "Muuzaji mwanafunzi wa UDOM",
     active: true
   }

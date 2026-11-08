@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#1A56DB"/>
+  <!-- Generic tags: per-product link previews need a build step (not done on purpose) -->
+  <meta name="description" content="Bidhaa kutoka kwa wauzaji wanafunzi wa UDOM kwenye WINGA MSOMI. Agiza moja kwa moja kupitia WhatsApp."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="WINGA MSOMI"/>
+  <meta property="og:title" content="WINGA MSOMI — Soko la Wanafunzi wa UDOM"/>
+  <meta property="og:description" content="Bidhaa kutoka kwa wauzaji wanafunzi wa UDOM. Agiza moja kwa moja kupitia WhatsApp."/>
+  <meta property="og:locale" content="sw_TZ"/>
+  <title>Bidhaa | WINGA MSOMI</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+  <link rel="icon" type="image/png" href="images/favicon.png"/>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body class="page-product">
+
+  <!-- ══════════════ TOPBAR ══════════════ -->
+  <div class="topbar">
+    <i class="fa-solid fa-user-graduate" aria-hidden="true"></i>
+    Wauzaji wanafunzi wa <strong>UDOM</strong> &nbsp;·&nbsp;
+    <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Oda moja kwa moja WhatsApp
+  </div>
+
+  <!-- ══════════════ NAVBAR (new header comes in Phase 4) ══════════════ -->
+  <nav id="navbar" aria-label="Menyu Kuu">
+    <div class="nav-wrap">
+      <a href="index.html" class="brand" aria-label="WINGA MSOMI - Nyumbani">
+        <div class="brand-icon"><i class="fa-solid fa-bolt" aria-hidden="true"></i></div>
+        <div class="brand-text">
+          <span class="brand-name">WINGA MSOMI</span>
+          <span>Affordable gadgets for students</span>
+        </div>
+      </a>
+
+      <ul class="nav-links" role="list">
+        <li><a href="index.html"><i class="fa-solid fa-house"></i> Nyumbani</a></li>
+        <li><a href="index.html#products" class="active"><i class="fa-solid fa-shop"></i> Bidhaa</a></li>
+        <li><a href="index.html#contact"><i class="fa-solid fa-phone"></i> Mawasiliano</a></li>
+      </ul>
+
+      <a href="#" data-wa class="nav-wa" target="_blank" rel="noopener">
+        <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Order kwa WhatsApp
+      </a>
+
+      <button type="button" class="nav-cart" data-cart-open aria-controls="cartDrawer" aria-expanded="false" aria-label="Fungua cart">
+        <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+        <span class="cart-badge" data-cart-count hidden>0</span>
+      </button>
+
+      <button class="hamburger" id="ham" aria-label="Fungua menyu" aria-expanded="false" aria-controls="mobMenu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <div class="mob-menu" id="mobMenu" role="navigation" aria-label="Menyu ya simu">
+      <a href="index.html"><i class="fa-solid fa-house"></i> Nyumbani</a>
+      <a href="index.html#products"><i class="fa-solid fa-shop"></i> Bidhaa</a>
+      <a href="index.html#contact"><i class="fa-solid fa-phone"></i> Mawasiliano</a>
+      <a href="#" data-wa target="_blank" rel="noopener" class="mob-wa-btn">
+        <i class="fa-brands fa-whatsapp"></i> Order kwa WhatsApp
+      </a>
+    </div>
+  </nav>
+
+  <!-- ══════════════ PRODUCT (filled by js/product.js) ══════════════ -->
+  <main id="product" class="pd-page" aria-live="polite">
+    <div class="pd-loading">
+      <noscript>Washa JavaScript ili kuona bidhaa hii.</noscript>
+    </div>
+  </main>
+
+  <!-- ══════════════ FOOTER ══════════════ -->
+  <footer id="contact" aria-label="Footer">
+    <div class="ft-grid">
+      <div class="ft-brand">
+        <h2><i class="fa-solid fa-bolt"></i> WINGA MSOMI</h2>
+        <p>Soko la wanafunzi wa UDOM: wauzaji wanafunzi wanatangaza bidhaa zao, wanunuzi wanaagiza moja kwa moja kupitia WhatsApp.</p>
+        <div class="socials">
+          <a class="soc instagram" href="https://www.instagram.com/tustary_nextgen" target="_blank" rel="noopener" aria-label="Instagram">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+          <a class="soc linkedin" href="https://www.linkedin.com/in/mussa-hassan-kitto-29940729b" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <i class="fa-brands fa-linkedin-in"></i>
+          </a>
+          <a class="soc whatsapp" href="#" data-wa data-wa-text="" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <i class="fa-brands fa-whatsapp"></i>
+          </a>
+          <a class="soc facebook" href="https://www.facebook.com/taymiah.mussa" target="_blank" rel="noopener" aria-label="Facebook">
+            <i class="fa-brands fa-facebook-f"></i>
+          </a>
+          <a class="soc tiktok" href="https://www.tiktok.com/@tustary_nextgen" target="_blank" rel="noopener" aria-label="TikTok">
+            <i class="fa-brands fa-tiktok"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="ft-col">
+        <h4><i class="fa-solid fa-link" style="color:var(--blue);margin-right:8px"></i>Viungo</h4>
+        <ul>
+          <li><a href="index.html"><i class="fa-solid fa-house"></i> Nyumbani</a></li>
+          <li><a href="index.html#products"><i class="fa-solid fa-shop"></i> Bidhaa</a></li>
+          <li><a href="#" data-cart-open><i class="fa-solid fa-cart-shopping"></i> Cart Yako</a></li>
+        </ul>
+      </div>
+
+      <div class="ft-col">
+        <h4><i class="fa-solid fa-address-card" style="color:var(--blue);margin-right:8px"></i>Mawasiliano</h4>
+        <ul>
+          <li><div class="ct-item"><i class="fa-brands fa-whatsapp"></i><span>WhatsApp: <span data-wa-display></span></span></div></li>
+          <li><div class="ct-item"><i class="fa-solid fa-location-dot"></i><span>UDOM-CIVE College, Dodoma</span></div></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ft-btm">
+      <span>© 2026 WINGA MSOMI</span>
+      <span><i class="fa-solid fa-location-dot"></i> Dodoma, Tanzania</span>
+    </div>
+  </footer>
+
+  <!-- Floating "ask / request a product" button (hidden on phones here: the sticky bar replaces it) -->
+  <a href="#" data-wa="request" class="flt-chat" target="_blank" rel="noopener" aria-label="Omba bidhaa au uliza kupitia WhatsApp">
+    <span class="flt-chat-text">Omba bidhaa / Uliza</span>
+    <span class="flt-chat-icon" aria-hidden="true"><i class="fa-solid fa-headset"></i></span>
+  </a>
+
+  <!-- Data first, then helpers, then page behaviour -->
+  <script src="js/data/site.js"></script>
+  <script src="js/data/sellers.js"></script>
+  <script src="js/data/categories.js"></script>
+  <script src="js/data/products.js"></script>
+  <script src="js/whatsapp.js"></script>
+  <script src="js/render.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/product.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

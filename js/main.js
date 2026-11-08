@@ -49,7 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('scroll', setActiveLink, { passive: true });
   setActiveLink();
 
-  /* ── CATEGORY FILTER ─────────────────────────────────────────── */
+  /* ── CATEGORY FILTER (home page only) ────────────────────────── */
+  if (pgrid) {
   const catBtns = document.querySelectorAll('.cat-btn');
   const cards   = Array.from(document.querySelectorAll('.pcard'));
   const productSearch = document.getElementById('productSearch');
@@ -125,6 +126,21 @@ document.addEventListener('DOMContentLoaded', () => {
   productSearch?.addEventListener('input', applyProductView);
   productSort?.addEventListener('change', applyProductView);
   applyProductView();
+
+  /* Links like index.html#cat=audio select that category and scroll to the grid */
+  function applyHashCategory() {
+    const m = location.hash.match(/^#cat=([\w-]+)/);
+    if (!m) return;
+    const btn = document.querySelector(`.cat-btn[data-cat="${m[1]}"]`);
+    if (!btn) return;
+    btn.click();
+    const products = document.getElementById('products');
+    const offset = document.getElementById('navbar').offsetHeight + 12;
+    if (products) window.scrollTo({ top: products.offsetTop - offset, behavior: 'smooth' });
+  }
+  window.addEventListener('hashchange', applyHashCategory);
+  applyHashCategory();
+  } // end home page product grid
 
   /* ── IMAGE LAZY LOAD + SHIMMER ───────────────────────────────── */
   const imgs = document.querySelectorAll('.pcard-img img');
@@ -203,7 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
       const href = a.getAttribute('href');
-      if (href.length < 2) return; // plain "#" links
+      if (href.length < 2 || href.includes('=')) return; // plain "#" and "#cat=..." links
       const target = document.querySelector(href);
       if (!target) return;
       e.preventDefault();

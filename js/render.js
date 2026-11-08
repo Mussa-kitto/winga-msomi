@@ -69,6 +69,9 @@ WM.render = (function () {
   }
 
   /* One product card (same markup/classes as the original hand-written cards) */
+  // Relative link to a product's own page
+  const productPage = p => `product.html?id=${encodeURIComponent(p.id)}`;
+
   function card(p) {
     const cat = WM.catalog.category(p.category) || {};
     const icon = p.icon || cat.icon || 'fa-solid fa-box-open';
@@ -84,6 +87,10 @@ WM.render = (function () {
           <div class="pcat"><i class="${esc(icon)}"></i> ${esc(cat.fullLabel || cat.label || p.category)}</div>
           <h3 class="pname">${esc(p.name)}</h3>
           <p class="pdesc">${esc(p.description)}</p>
+          <!-- Stretched link: makes the whole card open the product page -->
+          <a class="pmore" href="${esc(productPage(p))}" aria-label="Ona zaidi kuhusu ${esc(p.name)}">
+            Ona zaidi <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+          </a>
           <div class="pfoot">
             <div class="pprice"><span class="cur">TZS </span>${WM.wa.money(p.price)}</div>
             ${sold ? '' : `
@@ -127,7 +134,7 @@ WM.render = (function () {
     });
   }
 
-  return { esc, card, grid, catBar, contactLinks };
+  return { esc, productPage, badgeHtml, card, grid, catBar, contactLinks };
 })();
 
 /* ── CART DRAWER + BADGE + TOAST (every page) ───────────────────────

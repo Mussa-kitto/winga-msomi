@@ -52,6 +52,12 @@ WM.wa = (function () {
     return link(numberFor(p.sellerId), productOrderText(p, qty));
   }
 
+  // "Chat na Muuzaji": ask the seller about one product
+  function productChatLink(p) {
+    const text = `${fill(msg.askProduct, { name: p.name, price: money(p.price) })}\n${productUrl(p)}`;
+    return link(numberFor(p.sellerId), text);
+  }
+
   // "I couldn't find what I want" request, optionally with the search query
   function requestLink(query) {
     const q = query ? ` Bidhaa ninayotafuta ni: ${query}.` : '';
@@ -97,5 +103,5 @@ WM.wa = (function () {
     });
   }
 
-  return { numberFor, link, productUrl, contactLink, productOrderText, productOrderLink, requestLink, cartText, cartOrders, money };
+  return { numberFor, link, productUrl, contactLink, productOrderText, productOrderLink, productChatLink, requestLink, cartText, cartOrders, money };
 })();

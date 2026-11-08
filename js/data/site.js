@@ -27,6 +27,8 @@ WM.site = {
     general: "Habari! Nataka kuorder kutoka WINGA MSOMI",
     orderOne: "Nataka {name} - TZS {price}",
     requestProduct: "Habari! Nimekosa bidhaa ninayoitaka kwenye website.{query} Naomba msaada wa kuipata.",
+    // "Chat na Muuzaji" on a product page
+    askProduct: "Habari! Naomba maelezo zaidi kuhusu {name} (TZS {price}).",
     // Single product with a quantity > 1
     orderQty: "Nataka {name} x{qty} - TZS {total} (TZS {price} kila moja)",
     // Cart order: greeting, numbered items, total, then buyer details
