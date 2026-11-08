@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <!-- Security: only scripts from this site; no inline scripts, no eval -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"/>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="theme-color" content="#1A56DB"/>
   <meta name="description" content="WINGA MSOMI - Soko la wanafunzi wa UDOM: bidhaa kutoka kwa wauzaji wanafunzi, agiza moja kwa moja kupitia WhatsApp."/>
@@ -14,10 +14,9 @@
   <meta property="og:locale" content="sw_TZ"/>
   <title>WINGA MSOMI — Soko la Wanafunzi wa UDOM</title>
 
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="preload" href="fonts/sora-latin.woff2" as="font" type="font/woff2" crossorigin/>
+  <link rel="preload" href="fonts/dmsans-latin.woff2" as="font" type="font/woff2" crossorigin/>
+  <link rel="stylesheet" href="css/fonts.css"/>
 
   <link rel="stylesheet" href="css/icons.css"/>
 
