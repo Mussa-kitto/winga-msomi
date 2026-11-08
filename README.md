@@ -21,6 +21,9 @@ js/render.js          draws cards, menus, hero, cart drawer from the data
 js/header.js          search suggestions, category menu, mobile menu
 js/product.js         product page
 js/main.js            home page grid (filter/search/sort) and shared behaviour
+admin/index.html      owner-only admin page (/admin): products, photos, sellers
+js/admin.js           admin logic (talks only to api.github.com with your token)
+css/admin.css         admin styles
 images/               product photos (put new ones in images/<seller-id>/)
 tests/                dev-only test page (not deployed)
 _archive/, reference/ kept in git, not deployed (see .vercelignore)
@@ -29,6 +32,26 @@ _archive/, reference/ kept in git, not deployed (see .vercelignore)
 Phone numbers are written **only** in `js/data/site.js` and `js/data/sellers.js`.
 
 ---
+
+## Admin page (easiest way to manage products)
+
+Open **`/admin`** on the live site (for example `https://winga-msomi.vercel.app/admin/`), on your phone or computer.
+From there you can add, edit or delete products and sellers, upload or delete photos, and mark products "Imeuzwa" or "Imefichwa".
+
+- **Only you can save.** The page needs a GitHub token that can write to this repository. Anyone can open the page, but without the token nothing can be changed.
+- **Create the token once:** GitHub → Settings → Developer settings → Personal access tokens → *Fine-grained tokens* → *Generate new token*.
+  Repository access: *Only select repositories* → `winga-msomi`. Permissions → *Contents: Read and write*. Paste it on the admin login screen.
+  The token stays in that browser only. If you lose the device, delete the token on GitHub.
+- **Each save is one commit** to `main` (photos + `js/data/products.js` or `sellers.js`). Vercel then updates the site in about 1–2 minutes.
+- **Photos are resized in the browser** to at most 1000 px (JPEG) before upload and saved in `images/<seller-id>/`.
+  Removing a photo from a product deletes the file only if no other product uses it.
+- **Saves are always made on top of the newest version**, so a change made from another device (or by hand) is never overwritten.
+- A product's **ID cannot be changed** after it is created, so old links and carts keep working.
+
+Test the admin locally without touching GitHub: run the local server, open `http://localhost:5501/admin/?mock=1` and log in with any token
+(`tests/mock-github.js` fakes GitHub in the browser; `tests/` is not deployed).
+
+You can still edit the data files by hand, as described below. The admin page reads and writes the same files.
 
 ## How to add a product
 
