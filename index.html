@@ -10,7 +10,7 @@
   <meta property="og:title" content="WINGA MSOMI — Soko la Wanafunzi wa UDOM"/>
   <meta property="og:description" content="Bidhaa kutoka kwa wauzaji wanafunzi wa UDOM. Agiza moja kwa moja kupitia WhatsApp."/>
   <meta property="og:locale" content="sw_TZ"/>
-  <title>WINGA MSOMI — Gadgets za Bei Nafuu | UDOM</title>
+  <title>WINGA MSOMI — Soko la Wanafunzi wa UDOM</title>
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -20,633 +20,370 @@
   <!-- Font Awesome 6 (Free) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="images/favicon.png"/>
-
-  <!-- Stylesheet -->
   <link rel="stylesheet" href="css/style.css"/>
-
-  <!-- ══ Payment Section Styles ══ -->
-  <style>
-    /* Section wrapper */
-    .sec-pay {
-      background: #f7f9ff;
-      padding: 56px 0;
-    }
-
-    /* 2-col grid, compact gap */
-    .pay-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-      margin-top: 28px;
-      max-width: 780px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    @media (max-width: 640px) {
-      .pay-grid { grid-template-columns: 1fr; gap: 16px; }
-    }
-
-    /* Card */
-    .pay-card {
-      background: #fff;
-      border-radius: 16px;
-      border: 1.5px solid #e2e8f0;
-      box-shadow: 0 2px 12px rgba(0,0,0,.06);
-      overflow: hidden;
-      transition: transform .22s, box-shadow .22s;
-    }
-    .pay-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 24px rgba(26,86,219,.12);
-    }
-
-    /* Logo strip — slim */
-    .pay-logo-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 18px 16px;
-    }
-    .airtel-bg { background: linear-gradient(135deg,#e8000d,#a50009); }
-    .yas-bg    { background: linear-gradient(135deg,#005baa,#003470); }
-
-    .pay-logo-svg { width: 130px; height: auto; filter: drop-shadow(0 2px 6px rgba(0,0,0,.25)); }
-
-    /* Body */
-    .pay-info { padding: 16px 18px 18px; }
-
-    .pay-name {
-      font-size: 1rem;
-      font-weight: 800;
-      color: #0f172a;
-      margin: 0 0 12px;
-      display: flex;
-      align-items: center;
-      gap: 7px;
-    }
-
-    /* Detail rows */
-    .pay-detail {
-      background: #f8faff;
-      border: 1px solid #dde6f8;
-      border-radius: 10px;
-      padding: 4px 12px;
-      margin-bottom: 12px;
-    }
-    .pay-row {
-      display: flex;
-      align-items: baseline;
-      gap: 6px;
-      padding: 7px 0;
-      border-bottom: 1px dashed #e2e8f5;
-      flex-wrap: wrap;
-    }
-    .pay-row:last-child { border-bottom: none; }
-
-    .pay-label {
-      font-size: .72rem;
-      font-weight: 700;
-      color: #64748b;
-      white-space: nowrap;
-    }
-    .pay-val {
-      font-size: .85rem;
-      font-weight: 700;
-      color: #1e293b;
-    }
-    .pay-num {
-      font-size: .95rem;
-      font-family: 'Courier New', monospace;
-      letter-spacing: 1px;
-      color: #0f172a;
-    }
-
-    /* Steps */
-    .pay-steps {
-      background: #fffbeb;
-      border: 1px solid #fde68a;
-      border-radius: 10px;
-      padding: 10px 14px;
-    }
-    .pay-steps-title {
-      font-size: .75rem;
-      font-weight: 800;
-      color: #92400e;
-      text-transform: uppercase;
-      letter-spacing: .4px;
-      margin: 0 0 7px;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-    .pay-steps ol {
-      margin: 0;
-      padding-left: 17px;
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-    .pay-steps ol li {
-      font-size: .78rem;
-      color: #44403c;
-      line-height: 1.5;
-    }
-
-    /* Notice bar */
-    .pay-note {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: #f0fdf4;
-      border: 1.5px solid #86efac;
-      border-radius: 12px;
-      padding: 12px 18px;
-      margin-top: 20px;
-      font-size: .85rem;
-      color: #14532d;
-      line-height: 1.55;
-      max-width: 780px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .pay-note i { font-size: 1.1rem; color: #16a34a; flex-shrink: 0; }
-    .pay-note strong { color: #166534; }
-  </style>
 </head>
 <body>
+  <a class="skip-link" href="#products">Ruka hadi kwenye bidhaa</a>
 
-  <!-- ══════════════ TOPBAR ══════════════ -->
+  <!-- ══════════════ TOPBAR (no delivery/payment promises) ══════════════ -->
   <div class="topbar">
-    <i class="fa-solid fa-truck-fast"></i>
-    Delivery ndani ya <strong>UDOM Campus</strong> masaa 1–3 tu &nbsp;|&nbsp;
-    <i class="fa-brands fa-whatsapp"></i>
-    Order: <strong data-wa-display></strong>
+    <i class="fa-solid fa-user-graduate" aria-hidden="true"></i>
+    Wauzaji wanafunzi wa <strong>UDOM</strong> &nbsp;·&nbsp;
+    <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Oda moja kwa moja WhatsApp
   </div>
 
-  <!-- ══════════════ NAVBAR ══════════════ -->
-  <nav id="navbar" aria-label="Menyu Kuu">
-    <div class="nav-wrap">
-
-      <!-- Brand / Logo -->
-      <a href="#home" class="brand" aria-label="WINGA MSOMI - Home">
-        <div class="brand-icon">
-          <i class="fa-solid fa-bolt"></i>
-        </div>
-        <div class="brand-text">
-          <h1>WINGA MSOMI</h1>
-          <span>Affordable gadgets for students</span>
-        </div>
-      </a>
-
-      <!-- Desktop Nav Links -->
-      <ul class="nav-links" role="list">
-        <li><a href="#home"     class="active"><i class="fa-solid fa-house"></i> Home</a></li>
-        <li><a href="#products"><i class="fa-solid fa-shop"></i> Bidhaa</a></li>
-        <li><a href="#payment" ><i class="fa-solid fa-credit-card"></i> Malipo</a></li>
-        <li><a href="#delivery"><i class="fa-solid fa-motorcycle"></i> Delivery</a></li>
-        <li><a href="#contact" ><i class="fa-solid fa-phone"></i> Mawasiliano</a></li>
-      </ul>
-
-      <!-- WhatsApp CTA -->
-      <a href="#" data-wa
-         class="nav-wa" target="_blank" rel="noopener" aria-label="Order via WhatsApp">
-        <i class="fa-brands fa-whatsapp"></i>
-        Order via WhatsApp
-      </a>
-
-      <!-- Cart (opens the cart drawer; badge updated by js/render.js) -->
-      <button type="button" class="nav-cart" data-cart-open aria-controls="cartDrawer" aria-expanded="false" aria-label="Fungua cart">
-        <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
-        <span class="cart-badge" data-cart-count hidden>0</span>
-      </button>
-
-      <!-- Hamburger (mobile) -->
-      <button class="hamburger" id="ham" aria-label="Fungua menyu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-
-    <!-- Mobile Menu -->
-    <div class="mob-menu" id="mobMenu" role="navigation">
-      <a href="#home">    <i class="fa-solid fa-house"></i>       Home</a>
-      <a href="#products"><i class="fa-solid fa-shop"></i>        Bidhaa</a>
-      <a href="#payment" ><i class="fa-solid fa-credit-card"></i> Malipo</a>
-      <a href="#delivery"><i class="fa-solid fa-motorcycle"></i>  Delivery</a>
-      <a href="#contact" ><i class="fa-solid fa-phone"></i>       Mawasiliano</a>
-      <a href="#" data-wa data-wa-text="" target="_blank" rel="noopener" class="mob-wa-btn">
-        <i class="fa-brands fa-whatsapp"></i> Order via WhatsApp
-      </a>
-    </div>
-  </nav>
-
-  <!-- ══════════════ HERO ══════════════ -->
-  <section class="hero" id="home" aria-label="Hero Section">
-    <div class="hero-dots"></div>
-    <div class="hero-circles"><span></span><span></span><span></span></div>
-
-    <div class="hero-inner">
-      <div class="live-badge">
-        <div class="live-dot"></div>
-        <i class="fa-solid fa-graduation-cap"></i>
-        Tunawasaidia Wanafunzi wa UDOM
-      </div>
-
-      <h2>Gadgets <em>za Bei Nafuu</em><br/>kwa Mwanafunzi wa UDOM</h2>
-
-      <p class="hero-sub">
-        Earphones, humidifiers, speakers, ring lights, laptops, laptop stands na mengi zaidi, Bidhaa
-        zote zinafika college yako kwa haraka sana!
-      </p>
-
-      <div class="hero-btns">
-        <a href="#" data-wa
-           class="btn-wa-hero" target="_blank" rel="noopener">
-          <i class="fa-brands fa-whatsapp"></i>
-          Order via WhatsApp
+  <!-- ══════════════ HEADER (same markup on product.html, links prefixed with index.html) ══════════════ -->
+  <header class="site-header" id="navbar">
+    <div class="hd-main">
+      <div class="hd-wrap">
+        <a href="#home" class="brand" aria-label="WINGA MSOMI - Nyumbani">
+          <div class="brand-icon"><i class="fa-solid fa-bolt" aria-hidden="true"></i></div>
+          <div class="brand-text">
+            <span class="brand-name">WINGA MSOMI</span>
+            <span class="brand-tag">Soko la wanafunzi wa UDOM</span>
+          </div>
         </a>
-        <a href="#products" class="btn-browse">
-          <i class="fa-solid fa-magnifying-glass"></i>
-          Tazama Bidhaa
-        </a>
-      </div>
 
-      <div class="hero-stats">
-        <div class="hstat">
-          <strong data-count="500" data-suffix="+">0+</strong>
-          <span><i class="fa-solid fa-users"></i> Happy Students</span>
-        </div>
-        <div class="hstat">
-          <strong>1–3<small style="font-size:1rem">hr</small></strong>
-          <span><i class="fa-solid fa-clock"></i> Delivery Time</span>
-        </div>
-        <div class="hstat">
-          <strong data-count="50" data-suffix="+">0+</strong>
-          <span><i class="fa-solid fa-boxes-stacked"></i> Bidhaa Zetu</span>
-        </div>
-        <div class="hstat">
-          <strong>FREE</strong>
-          <span><i class="fa-solid fa-truck"></i> Campus Delivery</span>
+        <form class="hd-search" role="search" action="index.html" autocomplete="off">
+          <label for="hdSearch" class="sr-only">Tafuta bidhaa</label>
+          <div class="hd-search-box">
+            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+            <input id="hdSearch" name="q" type="search" placeholder="Tafuta bidhaa, mf. earphones, laptop..."
+                   role="combobox" aria-expanded="false" aria-controls="hdSuggest" aria-autocomplete="list"/>
+            <button type="submit" class="hd-search-btn">Tafuta</button>
+          </div>
+          <ul id="hdSuggest" class="hd-suggest" role="listbox" aria-label="Mapendekezo ya bidhaa" hidden></ul>
+        </form>
+
+        <div class="hd-actions">
+          <a href="#" data-wa="headerOrder" class="hd-wa" target="_blank" rel="noopener" aria-label="Order kwa WhatsApp">
+            <i class="fa-brands fa-whatsapp" aria-hidden="true"></i><span class="hd-wa-text">Order kwa WhatsApp</span>
+          </a>
+          <button type="button" class="nav-cart" data-cart-open aria-controls="cartDrawer" aria-expanded="false" aria-label="Fungua cart">
+            <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+            <span class="cart-badge" data-cart-count hidden>0</span>
+          </button>
+          <button type="button" class="hamburger" id="ham" aria-label="Fungua menyu" aria-expanded="false" aria-controls="mobMenu">
+            <span></span><span></span><span></span>
+          </button>
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- ══════════════ PRODUCTS ══════════════ -->
-  <section class="sec" id="products" aria-label="Bidhaa Zetu">
-    <div class="sec-inner">
-
-      <p class="sec-tag"><i class="fa-solid fa-store"></i> Bidhaa Zetu</p>
-      <h2 class="sec-title">Bidhaa Bora, Bei Nafuu!</h2>
-      <p class="sec-sub">
-        Chagua category hapa chini ili kupata bidhaa unayotaka.
-        Bonyeza <strong>Order</strong> ili kuwasiliana WhatsApp moja kwa moja!
-      </p>
- 
-      <!-- Category Filter -->
-      <div class="cat-bar" role="group" aria-label="Chagua Aina ya Bidhaa">
-        <!-- Buttons rendered from js/data/categories.js -->
+    <nav class="hd-nav" aria-label="Menyu kuu">
+      <div class="hd-wrap">
+        <ul class="hd-links">
+          <li class="hd-dd">
+            <button type="button" class="hd-dd-btn" aria-expanded="false" aria-controls="catMenu">
+              <i class="fa-solid fa-bars" aria-hidden="true"></i> Bidhaa <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </button>
+            <ul class="hd-dd-menu" id="catMenu" data-cat-menu hidden></ul>
+          </li>
+          <li><a href="#home">Nyumbani</a></li>
+          <li><a href="#jinsi">Jinsi Inavyofanya Kazi</a></li>
+          <li><a href="#uza">Uza Nasi</a></li>
+          <li><a href="#support" class="hd-support"><i class="fa-solid fa-heart" aria-hidden="true"></i> Support Winga Msomi</a></li>
+          <li><a href="#kuhusu">Kuhusu Sisi</a></li>
+          <li><a href="#contact">Mawasiliano</a></li>
+        </ul>
       </div>
+    </nav>
 
-      <div class="shop-tools" aria-label="Zana za kutafuta bidhaa">
-        <label class="shop-search" for="productSearch">
-          <i class="fa-solid fa-magnifying-glass"></i>
-          <input id="productSearch" type="search" placeholder="Tafuta bidhaa..." autocomplete="off"/>
-        </label>
-        <label class="shop-sort" for="productSort">
-          <i class="fa-solid fa-arrow-down-wide-short"></i>
-          <select id="productSort" aria-label="Panga bidhaa">
-            <option value="featured">Featured</option>
-            <option value="name-asc">Jina A-Z</option>
-            <option value="price-asc">Bei ndogo kwanza</option>
-            <option value="price-desc">Bei kubwa kwanza</option>
-          </select>
-        </label>
-        <span class="shop-count" id="productCount" aria-live="polite"></span>
-      </div>
-
-      <!-- Product Grid -->
-      <div class="pgrid" id="pgrid">
-        <!-- Cards are rendered from js/data/products.js by js/render.js -->
-        <noscript><p>Washa JavaScript ili kuona bidhaa, au wasiliana nasi WhatsApp.</p></noscript>
-      </div><!-- /pgrid -->
-    </div>
-  </section>
-
-  <!-- ══════════════ CTA BANNER ══════════════ -->
-  <div class="cta-wrap">
-    <div class="cta-box reveal" style="background: linear-gradient(135deg, #050e2b 0%, #0d1f5c 40%, #102272 100%); border: none;">
-      <h3><i class="fa-solid fa-bolt"></i> Unda Order Yako Sasa Hivi!</h3>
-      <p>Tuambie bidhaa unayotaka, tutakuletea ulipo ndani ya masaa 1–3.<br/>
-         <strong>Haraka · Salama · Bei Nafuu</strong></p>
-      <a href="#" data-wa
-         class="btn-wa-big" target="_blank" rel="noopener">
-        <i class="fa-brands fa-whatsapp"></i>
-        Order kupitia WhatsApp Sasa
+    <div class="mob-menu" id="mobMenu" role="navigation" aria-label="Menyu ya simu">
+      <a href="#home"><i class="fa-solid fa-house"></i> Nyumbani</a>
+      <span class="mob-label">Aina za bidhaa</span>
+      <div class="mob-cats" data-cat-menu></div>
+      <a href="#jinsi"><i class="fa-solid fa-circle-question"></i> Jinsi Inavyofanya Kazi</a>
+      <a href="#uza"><i class="fa-solid fa-store"></i> Uza Nasi</a>
+      <a href="#support"><i class="fa-solid fa-heart"></i> Support Winga Msomi</a>
+      <a href="#kuhusu"><i class="fa-solid fa-circle-info"></i> Kuhusu Sisi</a>
+      <a href="#contact"><i class="fa-solid fa-phone"></i> Mawasiliano</a>
+      <a href="#" data-wa="headerOrder" target="_blank" rel="noopener" class="mob-wa-btn">
+        <i class="fa-brands fa-whatsapp"></i> Order kwa WhatsApp
       </a>
     </div>
-  </div>
+  </header>
 
-  <section class="sec sec-pay" id="payment" aria-label="Njia za Malipo">
-    <div class="sec-inner">
-      <p class="sec-tag"><i class="fa-solid fa-credit-card"></i> Njia za Malipo</p>
-      <h2 class="sec-title">Lipa kwa Urahisi</h2>
-      <p class="sec-sub">
-        Tunakubali malipo kupitia <strong>Airtel Money</strong> na <strong>Yas</strong>.
-        Lipa baada ya kuthibitisha order yako kupitia WhatsApp.
-      </p>
- 
-      <div class="pay-grid">
- 
-        <!-- Airtel Money -->
-        <div class="pay-card reveal">
-          <div class="pay-logo-wrap airtel-bg">
-            <!-- Airtel Money SVG Logo -->
-            <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg" class="pay-logo-svg" role="img" aria-label="Airtel Money">
-              <rect width="120" height="50" rx="8" fill="#ED1C24"/>
-              <text x="60" y="20" font-family="Arial,sans-serif" font-weight="900" font-size="14" fill="white" text-anchor="middle" dominant-baseline="middle">airtel</text>
-              <rect x="10" y="28" width="100" height="2" fill="rgba(255,255,255,0.4)" rx="1"/>
-              <text x="60" y="40" font-family="Arial,sans-serif" font-weight="700" font-size="10" fill="#FFD700" text-anchor="middle" dominant-baseline="middle">MONEY</text>
-            </svg>
+  <main>
+    <!-- ══════════════ HERO + BENEFITS (from js/data/banners.js and site.js) ══════════════ -->
+    <section id="home" class="home-top" aria-label="Karibu Winga Msomi">
+      <div class="hero-grid" id="heroGrid"></div>
+      <div class="benefits" id="benefits" aria-label="Kwa nini Winga Msomi"></div>
+    </section>
+
+    <!-- ══════════════ TOP CATEGORIES ══════════════ -->
+    <section class="sec" id="categories" aria-labelledby="catTitle">
+      <div class="sec-inner">
+        <div class="sec-head">
+          <div>
+            <p class="sec-tag"><i class="fa-solid fa-layer-group" aria-hidden="true"></i> Aina za Bidhaa</p>
+            <h2 class="sec-title" id="catTitle">Chagua kwa Aina</h2>
+            <p class="sec-sub">Bonyeza aina ya bidhaa kuona bidhaa zake zote.</p>
           </div>
-          <div class="pay-info">
-            <h3 class="pay-name"><i class="fa-solid fa-mobile-screen-button" style="color:#ED1C24"></i> Airtel Money</h3>
-            <div class="pay-detail">
-              <div class="pay-row">
-                <span class="pay-label"><i class="fa-solid fa-phone"></i> Namba ya Kulipa:</span>
-                <span class="pay-val pay-num">0687 602 205</span>
-              </div>
-              <div class="pay-row">
-                <span class="pay-label"><i class="fa-solid fa-user"></i> Jina la Mpokeaji:</span>
-                <span class="pay-val">AZIZA MUSSA ALLY</span>
-              </div>
-              <div class="pay-row">
-                <span class="pay-label"><i class="fa-solid fa-network-wired"></i> Mtandao:</span>
-                <span class="pay-val"><strong>Airtel Tanzania</strong></span>
-              </div>
-            </div>
-            <div class="pay-steps">
-              <p class="pay-steps-title"><i class="fa-solid fa-list-ol"></i> Jinsi ya Kulipa:</p>
-              <ol>
-                <li>Nenda kwenye <strong>Airtel Money</strong> simu yako</li>
-                <li>Chagua <strong>"Tuma Pesa"</strong></li>
-                <li>Ingiza namba: <strong>0687 602 205</strong></li>
-                <li>Ingiza kiasi ulichokubaliana</li>
-                <li>Tuma picha ya risiti WhatsApp: <strong>0687 602 205</strong></li>
-              </ol>
-            </div>
-          </div>
+          <a class="sec-link" href="#products"><span>Bidhaa zote (<span data-count-of="products"></span>)</span> <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
         </div>
- 
-        <!-- Yas Money -->
-        <div class="pay-card reveal">
-          <div class="pay-logo-wrap yas-bg">
-            <!-- YAS SVG Logo -->
-            <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg" class="pay-logo-svg" role="img" aria-label="Yas">
-              <rect width="120" height="50" rx="8" fill="#00529B"/>
-              <text x="60" y="22" font-family="Arial,sans-serif" font-weight="900" font-size="22" fill="white" text-anchor="middle" dominant-baseline="middle">YAS</text>
-              <text x="60" y="40" font-family="Arial,sans-serif" font-weight="600" font-size="9" fill="#7EC8E3" text-anchor="middle" dominant-baseline="middle">MOBILE MONEY</text>
-            </svg>
-          </div>
-          <div class="pay-info">
-            <h3 class="pay-name"><i class="fa-solid fa-mobile-screen-button" style="color:#00529B"></i> Yas</h3>
-            <div class="pay-detail">
-              <div class="pay-row">
-                <span class="pay-label"><i class="fa-solid fa-phone"></i> Namba ya Kulipa:</span>
-                <span class="pay-val pay-num">0779 963 013</span>
-              </div>
-              <div class="pay-row">
-                <span class="pay-label"><i class="fa-solid fa-user"></i> Jina la Mpokeaji:</span>
-                <span class="pay-val">MUSSA HASSAN KITTO</span>
-              </div>
-              <div class="pay-row">
-                <span class="pay-label"><i class="fa-solid fa-network-wired"></i> Mtandao:</span>
-                <span class="pay-val"><strong>Yas Tanzania</strong></span>
-              </div>
-            </div>
-            <div class="pay-steps">
-              <p class="pay-steps-title"><i class="fa-solid fa-list-ol"></i> Jinsi ya Kulipa:</p>
-              <ol>
-                <li>Nenda kwenye <strong>Yas App</strong> au USSD</li>
-                <li>Chagua <strong>"Send Money"</strong></li>
-                <li>Ingiza namba: <strong>0779 963 013</strong></li>
-                <li>Ingiza kiasi ulichokubaliana</li>
-                <li>Tuma picha ya risiti WhatsApp: <strong>0687 602 205</strong></li>
-              </ol>
-            </div>
-          </div>
-        </div>
- 
+        <div class="cat-cards" id="catCards"></div>
       </div>
- 
-      <!-- Payment Note -->
-      <div class="pay-note reveal">
-        <i class="fa-solid fa-circle-info"></i>
-        <span>Baada ya kulipa, <strong>tuma screenshot ya risiti</strong> kwenye WhatsApp <strong>+255 687 602 205</strong> ili order yako ithibitishwe na iwasilishwe haraka!</span>
-      </div>
- 
-    </div>
-  </section>
+    </section>
 
-  <!-- ══════════════ DELIVERY ══════════════ -->
-  <section class="sec sec-alt" id="delivery" aria-label="Delivery Info">
-    <div class="sec-inner">
-      <p class="sec-tag"><i class="fa-solid fa-motorcycle"></i> Delivery Info</p>
-      <h2 class="sec-title">Tunafika Ndani ya UDOM</h2>
-      <p class="sec-sub">Delivery yetu ni ya haraka na ya kuaminika. Tuma order, tutafikia hata ukiwa hostelini!</p>
+    <!-- ══════════════ PRODUCTS ══════════════ -->
+    <section class="sec sec-alt" id="products" aria-labelledby="productsTitle">
+      <div class="sec-inner">
+        <p class="sec-tag"><i class="fa-solid fa-store" aria-hidden="true"></i> Bidhaa</p>
+        <h2 class="sec-title" id="productsTitle">Bidhaa Bora, Bei Nafuu!</h2>
+        <p class="sec-sub">
+          Bonyeza bidhaa kuona maelezo zaidi. Ongeza unazotaka kwenye <strong>cart</strong>,
+          kisha tuma oda moja kwa WhatsApp.
+        </p>
 
-      <div class="del-grid">
-        <div class="del-card reveal">
-          <div class="del-icon-wrap"><i class="fa-solid fa-location-dot"></i></div>
-          <h4>UDOM Campus</h4>
-          <p>Tunafikia <span class="hi">hostels zote</span> — Block A, B, C, D, E, F na maeneo yote ya campus.</p>
+        <!-- Category Filter -->
+        <div class="cat-bar" role="group" aria-label="Chagua aina ya bidhaa">
+          <!-- Buttons rendered from js/data/categories.js -->
         </div>
-        <div class="del-card reveal">
-          <div class="del-icon-wrap"><i class="fa-solid fa-clock"></i></div>
-          <h4>Masaa 1–3 tu</h4>
-          <p>Order yako inafika kwako <span class="hi">haraka sana</span>. Peak time inaweza kuchukua kidogo zaidi.</p>
+
+        <div class="shop-tools">
+          <label class="shop-search" for="productSearch">
+            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+            <span class="sr-only">Tafuta ndani ya bidhaa</span>
+            <input id="productSearch" type="search" placeholder="Tafuta bidhaa..." autocomplete="off"/>
+          </label>
+          <label class="shop-sort" for="productSort">
+            <i class="fa-solid fa-arrow-down-wide-short" aria-hidden="true"></i>
+            <span class="sr-only">Panga bidhaa</span>
+            <select id="productSort">
+              <option value="featured">Featured</option>
+              <option value="name-asc">Jina A-Z</option>
+              <option value="price-asc">Bei ndogo kwanza</option>
+              <option value="price-desc">Bei kubwa kwanza</option>
+            </select>
+          </label>
+          <span class="shop-count" id="productCount" aria-live="polite"></span>
         </div>
-        <div class="del-card reveal">
-          <div class="del-icon-wrap"><i class="fa-solid fa-tag"></i></div>
-          <h4>Delivery Bure!</h4>
-          <p><span class="hi">Delivery ni bure</span> ndani ya College kwa orders zote bila kikomo cha bei.</p>
-        </div>
-        <div class="del-card reveal">
-  <div class="del-icon-wrap"><i class="fa-solid fa-percent"></i></div>
-  <h4>Discount kwa Wanafunzi!</h4>
-  <p><span class="hi">Wanafunzi wa UDOM</span> wanapata punguzo maalum kwenye bidhaa zilizochaguliwa.</p>
-</div>
-        <div class="del-card reveal">
-          <div class="del-icon-wrap"><i class="fa-solid fa-shield-halved"></i></div>
-          <h4>100% Salama</h4>
-          <p>Bidhaa zinafika <span class="hi">zimefungwa salama</span>. Hakuna uharibifu wowote.</p>
+
+        <!-- Product Grid -->
+        <div class="pgrid" id="pgrid">
+          <!-- Cards are rendered from js/data/products.js by js/render.js -->
+          <noscript><p>Washa JavaScript ili kuona bidhaa, au wasiliana nasi WhatsApp.</p></noscript>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ══════════════ REVIEWS ══════════════ -->
-  <section class="sec" aria-label="Maoni ya Wateja">
-    <div class="sec-inner">
-      <p class="sec-tag"><i class="fa-solid fa-star"></i> Maoni ya Wateja</p>
-      <h2 class="sec-title">Wasomi wa UDOM Wanasema Nini?</h2>
-      <p class="sec-sub">Maoni ya kweli kutoka wanafunzi wenzetu wa UDOM.</p>
+    <!-- ══════════════ HOW IT WORKS ══════════════ -->
+    <section class="sec" id="jinsi" aria-labelledby="howTitle">
+      <div class="sec-inner">
+        <p class="sec-tag"><i class="fa-solid fa-circle-question" aria-hidden="true"></i> Jinsi Inavyofanya Kazi</p>
+        <h2 class="sec-title" id="howTitle">Hatua 3 Rahisi</h2>
+        <p class="sec-sub">Kununua kwenye Winga Msomi ni rahisi, moja kwa moja na muuzaji.</p>
 
-      <div class="rev-grid">
-        <div class="rev-card reveal">
-          <div class="stars">
-            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
+        <div class="steps">
+          <div class="step reveal">
+            <span class="step-num" aria-hidden="true">1</span>
+            <div class="step-icon"><i class="fa-solid fa-hand-pointer" aria-hidden="true"></i></div>
+            <h3>Chagua bidhaa</h3>
+            <p>Tafuta au chagua aina ya bidhaa. Fungua bidhaa kuona picha, bei na maelezo, kisha iongeze kwenye cart.</p>
           </div>
-          <p class="rev-text">"Nilichukua ring light na laptop stand, vyote vilifika ndani ya saa moja na nusu! Bei ni nzuri sana. Nitaorder tena!"</p>
-          <div class="revr">
-            <div class="revr-av">RM</div>
-            <div class="revr-info">
-              <strong>Rahma M.</strong>
-              <span><i class="fa-solid fa-graduation-cap"></i> Year 1, Information Systems</span>
-            </div>
-
+          <div class="step reveal">
+            <span class="step-num" aria-hidden="true">2</span>
+            <div class="step-icon"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></div>
+            <h3>Wasiliana na muuzaji WhatsApp</h3>
+            <p>Bonyeza "Agiza Sasa" au "Tuma Oda". Ujumbe wenye bidhaa zako unafunguka WhatsApp, tayari kutumwa.</p>
+          </div>
+          <div class="step reveal">
+            <span class="step-num" aria-hidden="true">3</span>
+            <div class="step-icon"><i class="fa-solid fa-handshake" aria-hidden="true"></i></div>
+            <h3>Kubaliana bei, malipo na kupokea bidhaa</h3>
+            <p>Mnakubaliana na muuzaji jinsi ya kulipa na kupokea bidhaa. Kagua bidhaa kabla ya kulipa.</p>
           </div>
         </div>
-        <div class="rev-card reveal">
-  <div class="stars">
-    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-    <i class="fa-solid fa-star"></i>
-  </div>
-  <p class="rev-text">"Heater yangu ni bora sana! Inafanya kazi vizuri sana usiku wa baridi. WINGA MSOMI wametisha sana hapa UDOM!"</p>
-  <div class="revr">
-    <div class="revr-av">HH</div>
-    <div class="revr-info">
-      <strong>Hafsa H</strong>
-      <span><i class="fa-solid fa-graduation-cap"></i> Year 1, Information Systems</span>
-    </div>
-  </div>
-</div>
-        <div class="rev-card reveal">
-          <div class="stars">
-            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
+
+        <p class="note-box">
+          <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+          <span>Winga Msomi inawaunganisha wanunuzi na wauzaji wanafunzi. Malipo na usafirishaji ni kati ya mnunuzi na muuzaji.</span>
+        </p>
+      </div>
+    </section>
+
+    <!-- ══════════════ SELL WITH US ══════════════ -->
+    <section class="sec sec-alt" id="uza" aria-labelledby="sellTitle">
+      <div class="sec-inner">
+        <p class="sec-tag"><i class="fa-solid fa-store" aria-hidden="true"></i> Uza Nasi</p>
+        <h2 class="sec-title" id="sellTitle">Una Bidhaa ya Kuuza? Itangaze Hapa</h2>
+        <p class="sec-sub">Wanafunzi wa UDOM wanaweza kutangaza bidhaa zao kwenye Winga Msomi. Wanunuzi watakuwasiliana moja kwa moja WhatsApp.</p>
+
+        <div class="two-col">
+          <div class="panel reveal">
+            <h3><i class="fa-solid fa-user-graduate" aria-hidden="true"></i> Nani anaweza kuuza?</h3>
+            <ul class="tick-list dots">
+              <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Mwanafunzi wa UDOM mwenye bidhaa halali ya kuuza.</li>
+              <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Bidhaa mpya au iliyotumika, ilimradi maelezo ni ya kweli.</li>
+            </ul>
+
+            <h3><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Tutumie nini?</h3>
+            <ul class="tick-list dots">
+              <li><i class="fa-solid fa-camera" aria-hidden="true"></i> Picha safi 2–4 za bidhaa yenyewe.</li>
+              <li><i class="fa-solid fa-tag" aria-hidden="true"></i> Jina la bidhaa na bei (TZS).</li>
+              <li><i class="fa-solid fa-align-left" aria-hidden="true"></i> Maelezo mafupi na hali yake (mpya au imetumika).</li>
+              <li><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Namba yako ya WhatsApp ambayo wanunuzi watatumia.</li>
+              <li><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Chuo/hostel ulipo.</li>
+            </ul>
           </div>
-          <p class="rev-text">"Laptop cooler pad yangu ni bora sana! Laptop haichemki tena. WINGA MSOMI wametisha sana hapa UDOM!"</p>
-          <div class="revr">
-            <div class="revr-av">NB</div>
-            <div class="revr-info">
-              <strong>Nkanda B.</strong>
-              <span><i class="fa-solid fa-graduation-cap"></i> Year 1, Computer Science</span>
-            </div>
-          </div>
-        </div>
-        <div class="rev-card reveal">
-          <div class="stars">
-            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-            <i class="fa-regular fa-star"></i>
-          </div>
-          <p class="rev-text">"Volcano humidifier inaonekana amazing usiku! Chumba changu kimekuwa na muonekano mzuri. Bei ya TZS 45,000 ni ya haki!"</p>
-          <div class="revr">
-            <div class="revr-av">GT</div>
-            <div class="revr-info">
-              <strong>Gladness T.</strong>
-              <span><i class="fa-solid fa-graduation-cap"></i> Year 3, Education</span>
-            </div>
+
+          <div class="panel panel-accent reveal">
+            <h3><i class="fa-solid fa-list-check" aria-hidden="true"></i> Checklist ya muuzaji</h3>
+            <ul class="tick-list">
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Bidhaa ni yako na ni halali.</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Picha ni za bidhaa halisi unayouza.</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Bei na maelezo ni ya kweli.</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Utawajibu wanunuzi WhatsApp kwa wakati.</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Mnunuzi ataruhusiwa kukagua bidhaa kabla ya kulipa.</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Utatujulisha bidhaa ikiuzwa ili tuiondoe.</li>
+            </ul>
+            <a href="#" data-wa="sell" class="btn-big-wa" target="_blank" rel="noopener">
+              <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Tuma bidhaa yako WhatsApp
+            </a>
+            <p class="small-note">Ujumbe ulioandaliwa utafunguka WhatsApp. Jaza taarifa zako kisha tuma picha.</p>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ══════════════ FOOTER ══════════════ -->
-  <footer id="contact" aria-label="Footer">
+    <!-- ══════════════ SUPPORT WINGA MSOMI (voluntary) ══════════════ -->
+    <section class="sec sec-support" id="support" aria-labelledby="supportTitle">
+      <div class="sec-inner">
+        <p class="sec-tag"><i class="fa-solid fa-heart" aria-hidden="true"></i> Support Winga Msomi</p>
+        <h2 class="sec-title" id="supportTitle">Saidia Winga Msomi Kukua</h2>
+        <p class="sec-sub">Ukipenda kazi hii, unaweza kuchangia kiasi chochote. Ni hiari kabisa.</p>
+
+        <div class="two-col">
+          <div class="panel reveal">
+            <span class="optional-badge"><i class="fa-solid fa-hand-holding-heart" aria-hidden="true"></i> Hiari, si lazima</span>
+            <ul class="tick-list">
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Mchango huu ni <strong>tofauti na kununua bidhaa</strong>. Malipo ya bidhaa ni kati yako na muuzaji.</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> <strong>Huhitaji kuchangia</strong> ili kutazama bidhaa au kuagiza.</li>
+            </ul>
+            <h3><i class="fa-solid fa-seedling" aria-hidden="true"></i> Mchango wako unasaidia</h3>
+            <ul class="tick-list dots">
+              <li><i class="fa-solid fa-server" aria-hidden="true"></i> Gharama za kuendesha website (hosting).</li>
+              <li><i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i> Maboresho ya website ili iwe rahisi zaidi kutumia.</li>
+              <li><i class="fa-solid fa-users" aria-hidden="true"></i> Kuwafikia na kuwasaidia wauzaji wanafunzi wengi zaidi.</li>
+            </ul>
+          </div>
+
+          <div class="panel reveal">
+            <h3><i class="fa-solid fa-mobile-screen-button" aria-hidden="true"></i> Jinsi ya kuchangia</h3>
+            <div class="pay-box">
+              <div class="pay-row"><span>Mtandao</span><strong data-support="networkName"></strong></div>
+              <div class="pay-row">
+                <span>Namba</span>
+                <strong><span data-support="number"></span>
+                  <button type="button" class="copy-btn" data-copy="number" aria-label="Nakili namba ya kuchangia">
+                    <i class="fa-regular fa-copy" aria-hidden="true"></i> Nakili</button></strong>
+              </div>
+              <div class="pay-row"><span>Jina</span><strong data-support="accountName"></strong></div>
+            </div>
+            <p class="note-box">
+              <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+              <span>Kabla ya kuthibitisha muamala, hakikisha jina linaloonekana ni <strong data-support="accountName"></strong>. Winga Msomi haitakuomba nywila au PIN yako.</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════ ABOUT ══════════════ -->
+    <section class="sec sec-alt" id="kuhusu" aria-labelledby="aboutTitle">
+      <div class="sec-inner">
+        <p class="sec-tag"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Kuhusu Sisi</p>
+        <h2 class="sec-title" id="aboutTitle">Winga Msomi ni Nini?</h2>
+        <p class="sec-sub">
+          Winga Msomi ni soko la mtandaoni la jumuiya ya Chuo Kikuu cha Dodoma (UDOM). Wauzaji wanafunzi wanatangaza
+          bidhaa zao hapa, na wanunuzi wanawasiliana nao moja kwa moja kupitia WhatsApp.
+        </p>
+
+        <!-- Numbers are computed from js/data (never typed by hand) -->
+        <div class="about-stats">
+          <div class="about-stat"><strong data-count-of="products"></strong>Bidhaa</div>
+          <div class="about-stat"><strong data-count-of="categories"></strong>Aina za bidhaa</div>
+          <div class="about-stat"><strong data-count-of="sellers"></strong>Wauzaji</div>
+        </div>
+
+        <div class="about-grid">
+          <div class="panel reveal">
+            <h3><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Tunachofanya</h3>
+            <p>Tunaonyesha bidhaa za wauzaji wanafunzi mahali pamoja na kurahisisha kuwasiliana nao kupitia WhatsApp.</p>
+          </div>
+          <div class="panel reveal">
+            <h3><i class="fa-solid fa-circle-xmark" aria-hidden="true"></i> Tusichofanya</h3>
+            <p>Hatumiliki stock, hatupokei malipo ya bidhaa na hatusafirishi bidhaa. Hayo ni makubaliano kati ya mnunuzi na muuzaji.</p>
+          </div>
+          <div class="panel reveal">
+            <h3><i class="fa-solid fa-bullseye" aria-hidden="true"></i> Lengo letu</h3>
+            <p>Kurahisisha wanafunzi wa UDOM kununua na kuuza bidhaa ndani ya jumuiya ya chuo, kwa bei nafuu.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ══════════════ FOOTER (Mawasiliano) ══════════════ -->
+  <footer id="contact" aria-label="Mawasiliano">
     <div class="ft-grid">
-
-      <!-- Brand column -->
       <div class="ft-brand">
-        <h2><i class="fa-solid fa-bolt"></i> WINGA MSOMI</h2>
-        <p>Gadgets za bei nafuu kwa wanafunzi wa UDOM. Tunakuletea teknolojia bora mpaka hostelini kwako ndani ya College zote, Ni haraka, salama, bei nafuu.</p>
+        <h2><i class="fa-solid fa-bolt" aria-hidden="true"></i> WINGA MSOMI</h2>
+        <p>Soko la wanafunzi wa UDOM: wauzaji wanafunzi wanatangaza bidhaa zao, wanunuzi wanaagiza moja kwa moja kupitia WhatsApp.</p>
         <div class="socials">
           <a class="soc instagram" href="https://www.instagram.com/tustary_nextgen" target="_blank" rel="noopener" aria-label="Instagram">
-            <i class="fa-brands fa-instagram"></i>
+            <i class="fa-brands fa-instagram" aria-hidden="true"></i>
           </a>
           <a class="soc linkedin" href="https://www.linkedin.com/in/mussa-hassan-kitto-29940729b" target="_blank" rel="noopener" aria-label="LinkedIn">
-            <i class="fa-brands fa-linkedin-in"></i>
+            <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>
           </a>
           <a class="soc whatsapp" href="#" data-wa data-wa-text="" target="_blank" rel="noopener" aria-label="WhatsApp">
-            <i class="fa-brands fa-whatsapp"></i>
+            <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
           </a>
           <a class="soc facebook" href="https://www.facebook.com/taymiah.mussa" target="_blank" rel="noopener" aria-label="Facebook">
-            <i class="fa-brands fa-facebook-f"></i>
+            <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
           </a>
           <a class="soc tiktok" href="https://www.tiktok.com/@tustary_nextgen" target="_blank" rel="noopener" aria-label="TikTok">
-            <i class="fa-brands fa-tiktok"></i>
+            <i class="fa-brands fa-tiktok" aria-hidden="true"></i>
           </a>
         </div>
       </div>
 
-      <!-- Quick Links -->
       <div class="ft-col">
-        <h4><i class="fa-solid fa-link" style="color:var(--blue);margin-right:8px"></i>Quick Links</h4>
+        <h3 class="ft-h"><i class="fa-solid fa-link" aria-hidden="true"></i> Viungo</h3>
         <ul>
-          <li><a href="#home">    <i class="fa-solid fa-house"></i>      Home</a></li>
-          <li><a href="#products"><i class="fa-solid fa-shop"></i>        Bidhaa</a></li>
-          <li><a href="#delivery"><i class="fa-solid fa-motorcycle"></i>  Delivery</a></li>
-          <li><a href="#" data-wa data-wa-text="" target="_blank" rel="noopener">
-                <i class="fa-brands fa-whatsapp"></i> Order Now
-              </a></li>
+          <li><a href="#products"><i class="fa-solid fa-shop" aria-hidden="true"></i> Bidhaa</a></li>
+          <li><a href="#jinsi"><i class="fa-solid fa-circle-question" aria-hidden="true"></i> Jinsi Inavyofanya Kazi</a></li>
+          <li><a href="#uza"><i class="fa-solid fa-store" aria-hidden="true"></i> Uza Nasi</a></li>
+          <li><a href="#support"><i class="fa-solid fa-heart" aria-hidden="true"></i> Support Winga Msomi</a></li>
+          <li><a href="#kuhusu"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Kuhusu Sisi</a></li>
         </ul>
       </div>
 
-      <!-- Contact -->
       <div class="ft-col">
-        <h4><i class="fa-solid fa-address-card" style="color:var(--blue);margin-right:8px"></i>Mawasiliano</h4>
+        <h3 class="ft-h"><i class="fa-solid fa-address-card" aria-hidden="true"></i> Mawasiliano</h3>
         <ul>
-          <li>
-            <div class="ct-item">
-              <i class="fa-solid fa-phone"></i>
-              <span data-wa-display></span>
-            </div>
-          </li>
-          <li>
-            <div class="ct-item">
-              <i class="fa-brands fa-whatsapp"></i>
-              <span>WhatsApp: <span data-wa-display></span></span>
-            </div>
-          </li>
-          <li>
-            <div class="ct-item">
-              <i class="fa-solid fa-location-dot"></i>
-              <span>UDOM-CIVE College, Dodoma</span>
-            </div>
-          </li>
-          <li>
-            <div class="ct-item">
-              <i class="fa-solid fa-clock"></i>
-              <span>Jumatatu – Jumapili: 8am – 10pm</span>
-            </div>
-          </li>
+          <li><a href="#" data-wa data-wa-text="" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> <span>WhatsApp: <span data-wa-display></span></span></a></li>
+          <li><div class="ct-item"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span>UDOM-CIVE College, Dodoma</span></div></li>
+          <li><div class="ct-item"><i class="fa-solid fa-clock" aria-hidden="true"></i><span>Jumatatu – Jumapili: 8am – 10pm</span></div></li>
         </ul>
       </div>
     </div>
 
     <div class="ft-btm">
       <span>© 2026 WINGA MSOMI</span>
-      <span><i class="fa-solid fa-location-dot"></i> Dodoma, Tanzania</span>
+      <span><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Dodoma, Tanzania</span>
     </div>
   </footer>
 
-  <!-- ══════════════ FLOATING WHATSAPP ══════════════ -->
-  <a href="#" data-wa="request"
-     class="flt-chat" target="_blank" rel="noopener" aria-label="Chat with us kuhusu bidhaa unayoitaka">
-    <span class="flt-chat-text">Chat with us</span>
-    <span class="flt-chat-icon" aria-hidden="true">
-      <i class="fa-solid fa-headset"></i>
-    </span>
+  <!-- ══════════════ FLOATING "ASK / REQUEST" BUTTON ══════════════ -->
+  <a href="#" data-wa="request" class="flt-chat" target="_blank" rel="noopener" aria-label="Omba bidhaa au uliza kupitia WhatsApp">
+    <span class="flt-chat-text">Omba bidhaa / Uliza</span>
+    <span class="flt-chat-icon" aria-hidden="true"><i class="fa-solid fa-headset"></i></span>
   </a>
 
-  <!-- JavaScript -->
   <!-- Data first, then helpers, then page behaviour -->
   <script src="js/data/site.js"></script>
   <script src="js/data/sellers.js"></script>
@@ -656,6 +393,7 @@
   <script src="js/whatsapp.js"></script>
   <script src="js/render.js"></script>
   <script src="js/store.js"></script>
+  <script src="js/header.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

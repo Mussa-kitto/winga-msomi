@@ -74,18 +74,20 @@ WM.render = (function () {
 
   function card(p) {
     const cat = WM.catalog.category(p.category) || {};
+    const seller = WM.catalog.seller(p.sellerId) || {};
     const icon = p.icon || cat.icon || 'fa-solid fa-box-open';
     const sold = p.status === 'sold';
     return `
       <article class="pcard" data-cat="${esc(p.category)}" data-id="${esc(p.id)}">
         <div class="pcard-img">
           <div class="shimmer"></div>
-          <img src="${esc(p.images[0])}" alt="${esc(p.alt || p.name)}" loading="lazy"/>
+          <img src="${esc(p.images[0])}" alt="${esc(p.alt || p.name)}" width="400" height="300" loading="lazy" decoding="async"/>
           ${badgeHtml(p)}
         </div>
         <div class="pcard-body">
-          <div class="pcat"><i class="${esc(icon)}"></i> ${esc(cat.fullLabel || cat.label || p.category)}</div>
+          <div class="pcat"><i class="${esc(icon)}" aria-hidden="true"></i> ${esc(cat.fullLabel || cat.label || p.category)}</div>
           <h3 class="pname">${esc(p.name)}</h3>
+          <div class="pseller"><i class="fa-solid fa-store" aria-hidden="true"></i> ${esc(seller.name || '')}</div>
           <p class="pdesc">${esc(p.description)}</p>
           <!-- Stretched link: makes the whole card open the product page -->
           <a class="pmore" href="${esc(productPage(p))}" aria-label="Ona zaidi kuhusu ${esc(p.name)}">
@@ -122,19 +124,124 @@ WM.render = (function () {
       WM.catalog.categories.filter(c => counts[c.key]).map(c => btn(c.key, c.icon, c.label, false)).join('');
   }
 
-  /* Elements with data-wa get a contact link; data-wa="request" -> "find me a product".
-     data-wa-text overrides the message. Elements with data-wa-display show the contact number. */
+  /* Elements with data-wa get a contact link:
+     data-wa="request" -> "find me a product"; data-wa="<key>" -> site.messages[key];
+     data-wa-text overrides the message ("" = no message).
+     data-wa-display shows the contact number; data-support="networkName|number|accountName"
+     shows the contribution details from site.js. */
   function contactLinks(root) {
-    (root || document).querySelectorAll('[data-wa]').forEach(a => {
-      const text = a.dataset.waText;
-      a.href = a.dataset.wa === 'request' ? WM.wa.requestLink() : WM.wa.contactLink(text);
+    root = root || document;
+    const msgs = site.messages || {};
+    root.querySelectorAll('[data-wa]').forEach(a => {
+      const key = a.dataset.wa;
+      if (key === 'request') a.href = WM.wa.requestLink();
+      else if (a.dataset.waText !== undefined) a.href = WM.wa.contactLink(a.dataset.waText);
+      else a.href = WM.wa.contactLink(msgs[key]); // undefined -> general message
     });
-    (root || document).querySelectorAll('[data-wa-display]').forEach(el => {
-      el.textContent = site.contactDisplay || '';
+    root.querySelectorAll('[data-wa-display]').forEach(el => { el.textContent = site.contactDisplay || ''; });
+    root.querySelectorAll('[data-support]').forEach(el => {
+      el.textContent = (site.support || {})[el.dataset.support] || '—';
     });
   }
 
-  return { esc, productPage, badgeHtml, card, grid, catBar, contactLinks };
+  /* ── HOME PAGE PIECES ── */
+  const catalog = () => WM.catalog;
+
+  // Lowest visible price in a category ("all" = every product)
+  function fromPrice(key) {
+    const list = catalog().visible().filter(p => key === 'all' || p.category === key);
+    return list.length ? Math.min(...list.map(p => p.price)) : 0;
+  }
+  const priceLine = key => {
+    const n = fromPrice(key);
+    return n ? `<p class="hb-price">Kuanzia <strong>TZS ${WM.wa.money(n)}</strong></p>` : '';
+  };
+  // Banner links: "#cat=x" stays on the home page; other links are used as-is
+  const bannerHref = link => link || '#products';
+
+  // Hero: big banner + two small banners (js/data/banners.js)
+  function hero(el) {
+    const b = WM.banners || {};
+    const h = b.hero;
+    if (!h) return;
+    const tones = ['tone-blue', 'tone-orange'];
+    el.innerHTML = `
+      <a class="hb hb-main" href="${esc(bannerHref(h.link))}">
+        <div class="hb-text">
+          ${h.kicker ? `<span class="hb-kicker"><i class="fa-solid fa-user-graduate" aria-hidden="true"></i> ${esc(h.kicker)}</span>` : ''}
+          <h1>${esc(h.title)}${h.highlight ? ` <em>${esc(h.highlight)}</em>` : ''}</h1>
+          ${h.subtitle ? `<p>${esc(h.subtitle)}</p>` : ''}
+          ${h.priceFrom ? priceLine(h.priceFrom) : ''}
+          <span class="hb-btn">${esc(h.button || 'Nunua sasa')} <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="hb-img"><img src="${esc(h.image)}" alt="" width="340" height="340" fetchpriority="high"/></div>
+      </a>
+      <div class="hb-side">
+        ${(b.side || []).slice(0, 2).map((s, i) => `
+          <a class="hb hb-small ${tones[i % 2]}" href="${esc(bannerHref(s.link))}">
+            <div class="hb-text">
+              <h2>${esc(s.title)}</h2>
+              ${s.subtitle ? `<p>${esc(s.subtitle)}</p>` : ''}
+              ${s.priceFrom ? priceLine(s.priceFrom) : ''}
+              <span class="hb-link">${esc(s.button || 'Tazama')} <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+            </div>
+            <div class="hb-img"><img src="${esc(s.image)}" alt="" width="140" height="140" loading="lazy"/></div>
+          </a>`).join('')}
+      </div>`;
+  }
+
+  // Benefits strip (site.js)
+  function benefits(el) {
+    el.innerHTML = (site.benefits || []).map(b => `
+      <div class="benefit">
+        <span class="benefit-icon"><i class="${esc(b.icon)}" aria-hidden="true"></i></span>
+        <div><strong>${esc(b.title)}</strong><span>${esc(b.text)}</span></div>
+      </div>`).join('');
+  }
+
+  // Category cards with product count + up to 3 product names
+  function catCards(el) {
+    const counts = catalog().countByCategory();
+    el.innerHTML = catalog().categories.filter(c => counts[c.key]).map(c => {
+      const names = catalog().visible().filter(p => p.category === c.key).slice(0, 3).map(p => `<li>${esc(p.name)}</li>`).join('');
+      return `
+        <a class="cat-card" href="#cat=${esc(c.key)}" aria-label="${esc(c.fullLabel || c.label)}: bidhaa ${counts[c.key]}">
+          <img src="${esc(c.image)}" alt="" width="96" height="96" loading="lazy"/>
+          <div class="cat-card-body">
+            <h3><i class="${esc(c.icon)}" aria-hidden="true"></i> ${esc(c.fullLabel || c.label)}</h3>
+            <span class="cat-count">Bidhaa ${counts[c.key]}</span>
+            <ul>${names}</ul>
+          </div>
+        </a>`;
+    }).join('');
+  }
+
+  // Category links for the header dropdown / mobile menu. base = "" on home, "index.html" elsewhere
+  function catLinks(el, base, withCounts) {
+    const counts = catalog().countByCategory();
+    const all = catalog().visible().length;
+    const link = (href, icon, label, n) =>
+      `<a href="${esc(href)}"><i class="${esc(icon)}" aria-hidden="true"></i> ${esc(label)}${withCounts ? `<span>${n}</span>` : ''}</a>`;
+    const items = [link(`${base}#products`, 'fa-solid fa-border-all', 'Bidhaa zote', all)]
+      .concat(catalog().categories.filter(c => counts[c.key])
+        .map(c => link(`${base}#cat=${c.key}`, c.icon, c.fullLabel || c.label, counts[c.key])));
+    el.innerHTML = el.tagName === 'UL' ? items.map(i => `<li>${i}</li>`).join('') : items.join('');
+  }
+
+  // Numbers computed from data (never typed by hand)
+  function counts(root) {
+    const vis = catalog().visible();
+    const values = {
+      products: vis.length,
+      categories: Object.keys(catalog().countByCategory()).length,
+      sellers: new Set(vis.map(p => p.sellerId)).size
+    };
+    (root || document).querySelectorAll('[data-count-of]').forEach(el => {
+      el.textContent = values[el.dataset.countOf] ?? '';
+    });
+  }
+
+  return { esc, productPage, badgeHtml, card, grid, catBar, contactLinks, hero, benefits, catCards, catLinks, counts };
 })();
 
 /* ── CART DRAWER + BADGE + TOAST (every page) ───────────────────────

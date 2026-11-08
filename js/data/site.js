@@ -2,7 +2,7 @@
    Phone numbers may ONLY appear here and in sellers.js. */
 window.WM = window.WM || {};
 WM.site = {
-  brand: { name: "WINGA MSOMI", tagline: "Affordable gadgets for students" },
+  brand: { name: "WINGA MSOMI", tagline: "Soko la wanafunzi wa UDOM" },
 
   // While set, EVERY order/chat goes to this number instead of the seller's own.
   // Remove (or set to "") to use each seller's whatsapp from sellers.js.
@@ -35,7 +35,11 @@ WM.site = {
     cartGreeting: "Habari! Nataka kuagiza:",
     cartItem: "{n}) {name} x{qty} — TZS {total} (TZS {price} kila moja)",
     cartTotal: "Jumla: TZS {total}",
-    buyerDetails: "Jina langu: \nHostel/Mahali nilipo: "
+    buyerDetails: "Jina langu: \nHostel/Mahali nilipo: ",
+    // "Uza Nasi" button: a student who wants to sell
+    sell: "Habari Winga Msomi! Nataka kuuza bidhaa kupitia Winga Msomi.\nJina langu: \nChuo/Hostel: \nBidhaa: \nBei (TZS): \nHali (mpya/imetumika): \nNitatuma picha za bidhaa hapa.",
+    // Header "Order kwa WhatsApp" button
+    headerOrder: "Habari Winga Msomi! Nahitaji msaada wa kuagiza bidhaa."
   },
 
   // wa.me links longer than this are refused; the buyer is asked to split the order.

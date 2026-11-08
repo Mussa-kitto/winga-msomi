@@ -43,7 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Specs table: real product specs (if any) + facts we know from the data
   const facts = [
-    ...(p.specs || []).map(s => (typeof s === 'string' ? s.split(/:(.+)/).slice(0, 2) : [s.label, s.value])),
+    // "Label: value" strings (or {label, value} objects)
+    ...(p.specs || []).map(s => (typeof s === 'string' ? s.split(/:(.+)/).slice(0, 2) : [s.label, s.value]).map(x => String(x || '').trim())),
     ['Hali', p.condition || 'Uliza muuzaji'],
     ['Aina', cat.fullLabel || cat.label],
     ['Muuzaji', seller.name]
