@@ -353,11 +353,11 @@ footer {
 }
 .soc i { font-size: 1.05rem; color: rgba(255,255,255,.75); transition: color .2s; }
 .soc:hover { transform: translateY(-3px); }
-.soc.instagram:hover { background: linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); border-color: transparent; }
-.soc.linkedin:hover  { background: #0077b5; border-color: #0077b5; }
 .soc.whatsapp:hover  { background: var(--green); border-color: var(--green); }
-.soc.facebook:hover  { background: #1877f2; border-color: #1877f2; }
-.soc.tiktok:hover    { background: #000; border-color: #69c9d0; }
+/* Single WhatsApp button in the footer */
+.soc-wide { width: auto; gap: 8px; padding: 0 16px; background: var(--green); border-color: var(--green); color: #fff; font-weight: 700; font-size: .88rem; }
+.soc-wide i { color: #fff; }
+.soc-wide:hover { background: var(--green-dk); border-color: var(--green-dk); }
 .soc:hover i { color: #fff; }
 
 .ft-col h4, .ft-col .ft-h { display: flex; align-items: center; gap: 8px; font-family: 'Sora', sans-serif; font-size: .95rem; font-weight: 700; color: #fff; margin-bottom: 20px; }
