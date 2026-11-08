@@ -53,6 +53,16 @@ Test the admin locally without touching GitHub: run the local server, open `http
 
 You can still edit the data files by hand, as described below. The admin page reads and writes the same files.
 
+## Security
+
+- **No secrets in this repository.** Phone numbers in `site.js`/`sellers.js` are public on purpose. Never commit tokens, passwords or `.env` files.
+- **Content-Security-Policy** (meta tag in every page): only scripts from this site may run. No inline scripts, no `eval`, no outside scripts.
+  Keep it that way: put new JavaScript in `js/*.js` files, never in `<script>…</script>` or `onclick=""`.
+- **`vercel.json` only adds security headers**: no framing (clickjacking), `nosniff`, referrer policy, permissions policy; `/admin` is `noindex` and not cached.
+- **Admin token:** fine-grained, `winga-msomi` only, *Contents: Read and write* only, with an expiry date. Revoke it on GitHub if a device is lost.
+- **Recommended account settings (do these yourself):** turn on two-factor authentication (2FA) on GitHub and on Vercel, and in the repo
+  Settings → *Code security* turn on *Secret scanning* and *Push protection* (free for public repositories).
+
 ## How to add a product
 
 1. Put the photos in `images/<seller-id>/`, for example `images/winga-msomi/blue-backpack-1.jpg`.

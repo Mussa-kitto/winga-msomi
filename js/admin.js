@@ -106,13 +106,22 @@
   /* ================================================================
      DATA FILES (read js/data/*.js, write them back in the same style)
      ================================================================ */
-  // Run a data file in a sandbox object and return WM.<key>
+  /* Read WM.<key> from a data file WITHOUT running it (no eval / new Function,
+     so a strict Content-Security-Policy can stay on). The array between
+     "WM.<key> = [" and the final "];" holds one JSON object per line. */
   function parseData(text, key) {
-    const w = { WM: {} };
-    new Function('window', 'WM', text)(w, w.WM); // eslint-disable-line no-new-func
-    const value = w.WM[key];
-    if (!Array.isArray(value)) throw new Error(`WM.${key} haikupatikana kwenye faili.`);
-    return value;
+    const marker = `WM.${key} = [`;
+    const start = text.indexOf(marker);
+    const end = text.lastIndexOf('];');
+    if (start < 0 || end < start) throw new Error(`WM.${key} haikupatikana kwenye faili.`);
+    const body = text.slice(start + marker.length, end).replace(/,\s*$/, ''); // allow a trailing comma
+    try {
+      const value = JSON.parse(`[${body}]`);
+      if (!Array.isArray(value)) throw new Error('not an array');
+      return value;
+    } catch (e) {
+      throw new Error(`Faili la ${key} lina kosa la muundo (JSON). Kama ulihariri kwa mkono, angalia koma na alama za nukuu ("). (${e.message})`);
+    }
   }
 
   // Same spacing as the existing files: {"a": 1, "b": ["x", "y"]}
@@ -170,10 +179,14 @@
   // Image src: the deployed file, or GitHub (raw) for photos not deployed yet
   function imgSrc(path) { return `../${path.split('/').map(encodeURIComponent).join('/')}`; }
   function rawSrc(path) { return `https://raw.githubusercontent.com/${gh.owner}/${gh.repo}/${encodeURIComponent(gh.branch)}/${encPath(path)}`; }
-  window.wmAdminImgFallback = img => {
-    if (!img.dataset.fallback && !state.isPrivate) { img.dataset.fallback = '1'; img.src = rawSrc(img.dataset.path); }
-  };
-  const imgTag = (path, cls) => `<img class="${cls || ''}" src="${esc(imgSrc(path))}" data-path="${esc(path)}" alt="" loading="lazy" width="64" height="64" onerror="wmAdminImgFallback(this)"/>`;
+  // One listener instead of inline onerror="" (inline handlers are blocked by the CSP)
+  document.addEventListener('error', e => {
+    const img = e.target;
+    if (img.tagName !== 'IMG' || !img.dataset.path || img.dataset.fallback || state.isPrivate) return;
+    img.dataset.fallback = '1';
+    img.src = rawSrc(img.dataset.path);
+  }, true);
+  const imgTag = (path, cls) => `<img class="${esc(cls || '')}" src="${esc(imgSrc(path))}" data-path="${esc(path)}" alt="" loading="lazy" width="64" height="64"/>`;
 
   /* ================================================================
      UI HELPERS
@@ -692,8 +705,22 @@
     $('#loginToken').focus();
   }
 
+  /* Dev only: on localhost with ?mock=1, load the fake GitHub (tests/, not deployed) first */
+  function loadMockIfDev() {
+    const dev = /^(localhost|127\.0\.0\.1)$/.test(location.hostname) && /[?&]mock=1/.test(location.search);
+    if (!dev) return Promise.resolve();
+    return new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = '../tests/mock-github.js';
+      s.onload = resolve;
+      s.onerror = () => reject(new Error('mock-github.js haikupatikana'));
+      document.head.appendChild(s);
+    });
+  }
+
   // Start: reuse a saved token if there is one
   (async () => {
+    await loadMockIfDev();
     const token = storage.get(KEY_TOKEN);
     if (!token) { showLogin(); return; }
     try { busy('Inaunganisha...'); await connect(token, readCfg()); $('#admToast').hidden = true; }
