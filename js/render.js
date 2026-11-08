@@ -147,46 +147,55 @@ WM.render = (function () {
   /* ── HOME PAGE PIECES ── */
   const catalog = () => WM.catalog;
 
-  // Lowest visible price in a category ("all" = every product)
-  function fromPrice(key) {
-    const list = catalog().visible().filter(p => key === 'all' || p.category === key);
-    return list.length ? Math.min(...list.map(p => p.price)) : 0;
+  /* Banner -> the real product it shows. Picture, name, price and link all come
+     from products.js, so they always match. If the product is sold/hidden, use the
+     cheapest available product of the banner's category ("Kuanzia" = true lowest). */
+  function bannerProduct(b) {
+    const p = b.productId && catalog().product(b.productId);
+    if (p && catalog().isVisible(p) && p.status === 'available') return { p, from: false };
+    if (b.productId && !p) console.warn(`[WM data] banner: unknown productId "${b.productId}"`);
+    const inCat = catalog().visible().filter(x => x.status === 'available' && x.category === b.category);
+    if (!inCat.length) return null;
+    return { p: inCat.reduce((a, x) => (x.price < a.price ? x : a)), from: true };
   }
-  const priceLine = key => {
-    const n = fromPrice(key);
-    return n ? `<p class="hb-price">Kuanzia <strong>TZS ${WM.wa.money(n)}</strong></p>` : '';
-  };
-  // Banner links: "#cat=x" stays on the home page; other links are used as-is
-  const bannerHref = link => link || '#products';
+  const priceHtml = bp => `<p class="hb-price">${bp.from ? 'Kuanzia ' : ''}<strong>TZS ${WM.wa.money(bp.p.price)}</strong></p>`;
 
   // Hero: big banner + two small banners (js/data/banners.js)
   function hero(el) {
     const b = WM.banners || {};
     const h = b.hero;
-    if (!h) return;
+    const main = h && bannerProduct(h);
+    if (!main) return;
+    const mp = main.p;
     const tones = ['tone-blue', 'tone-orange'];
     el.innerHTML = `
-      <a class="hb hb-main" href="${esc(bannerHref(h.link))}">
+      <a class="hb hb-main" href="${esc(productPage(mp))}">
         <div class="hb-text">
           ${h.kicker ? `<span class="hb-kicker"><i class="fa-solid fa-user-graduate" aria-hidden="true"></i> ${esc(h.kicker)}</span>` : ''}
           <h1>${esc(h.title)}${h.highlight ? ` <em>${esc(h.highlight)}</em>` : ''}</h1>
           ${h.subtitle ? `<p>${esc(h.subtitle)}</p>` : ''}
-          ${h.priceFrom ? priceLine(h.priceFrom) : ''}
+          <p class="hb-product">${esc(mp.name)}</p>
+          ${priceHtml(main)}
           <span class="hb-btn">${esc(h.button || 'Nunua sasa')} <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
         </div>
-        <div class="hb-img"><img src="${esc(h.image)}" alt="" width="340" height="340" fetchpriority="high"/></div>
+        <div class="hb-img"><img src="${esc(mp.images[0])}" alt="${esc(mp.alt || mp.name)}" width="340" height="340" fetchpriority="high"/></div>
       </a>
       <div class="hb-side">
-        ${(b.side || []).slice(0, 2).map((s, i) => `
-          <a class="hb hb-small ${tones[i % 2]}" href="${esc(bannerHref(s.link))}">
+        ${(b.side || []).slice(0, 2).map((s, i) => {
+          const sp = bannerProduct(s);
+          if (!sp) return '';
+          const cat = catalog().category(sp.p.category) || {};
+          return `
+          <a class="hb hb-small ${tones[i % 2]}" href="${esc(productPage(sp.p))}">
             <div class="hb-text">
-              <h2>${esc(s.title)}</h2>
-              ${s.subtitle ? `<p>${esc(s.subtitle)}</p>` : ''}
-              ${s.priceFrom ? priceLine(s.priceFrom) : ''}
+              <p class="hb-label">${esc(s.label || cat.fullLabel || cat.label || '')}</p>
+              <h2>${esc(sp.p.name)}</h2>
+              ${priceHtml(sp)}
               <span class="hb-link">${esc(s.button || 'Tazama')} <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </div>
-            <div class="hb-img"><img src="${esc(s.image)}" alt="" width="140" height="140" loading="lazy"/></div>
-          </a>`).join('')}
+            <div class="hb-img"><img src="${esc(sp.p.images[0])}" alt="${esc(sp.p.alt || sp.p.name)}" width="140" height="140" loading="lazy"/></div>
+          </a>`;
+        }).join('')}
       </div>`;
   }
 

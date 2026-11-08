@@ -1433,3 +1433,8 @@ body.cart-open .flt-chat { display: none; }
   transform: translateY(12px) scale(.92);
   transition: opacity .2s ease, transform .2s ease, visibility 0s linear .2s;
 }
+/* Hero banners show a real product: name + its own price */
+.hb .hb-product { margin: 4px 0 2px; font: 700 .95rem 'Sora', sans-serif; color: #fff; opacity: .95; }
+.hb .hb-label { margin: 0 0 4px; font-size: .72rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--blue); }
+.hb-small.tone-orange .hb-label { color: #c2410c; }
+.hb-small h2 { font-size: 1.05rem; }
