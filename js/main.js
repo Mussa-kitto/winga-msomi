@@ -4,6 +4,15 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  /* ── DATA: check data, fill WhatsApp links, render products ──── */
+  // Must run first: later code binds to the rendered cards/buttons/links.
+  WM.catalog.validate();
+  WM.render.contactLinks();
+  const pgrid = document.getElementById('pgrid');
+  const catBar = document.querySelector('.cat-bar');
+  if (catBar) WM.render.catBar(catBar);
+  if (pgrid) WM.render.grid(pgrid, WM.catalog.visible());
+
   /* ── HAMBURGER MENU ──────────────────────────────────────────── */
   const ham     = document.getElementById('ham');
   const mobMenu = document.getElementById('mobMenu');
@@ -19,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     a.addEventListener('click', () => {
       mobMenu.classList.remove('open');
       ham.classList.remove('open');
+      ham.setAttribute('aria-expanded', 'false');
     })
   );
 
@@ -41,7 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ── CATEGORY FILTER ─────────────────────────────────────────── */
   const catBtns = document.querySelectorAll('.cat-btn');
   const cards   = Array.from(document.querySelectorAll('.pcard'));
-  const pgrid = document.getElementById('pgrid');
   const productSearch = document.getElementById('productSearch');
   const productSort = document.getElementById('productSort');
   const productCount = document.getElementById('productCount');
@@ -51,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <i class="fa-solid fa-headset" aria-hidden="true"></i>
     <strong>Hujaiona bidhaa unayoitaka?</strong>
     <span>Tutajie bidhaa hiyo WhatsApp, tutakusaidia kuipata.</span>
-    <a class="empty-chat-link" href="https://wa.me/255687602205?text=Habari!%20Nimekosa%20bidhaa%20ninayoitaka%20kwenye%20website.%20Naomba%20msaada%20wa%20kuipata." target="_blank" rel="noopener">
+    <a class="empty-chat-link" href="${WM.wa.requestLink()}" target="_blank" rel="noopener">
       Chat with us
     </a>
   `;
@@ -100,8 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const emptyChatLink = emptyProducts.querySelector('.empty-chat-link');
     if (emptyChatLink) {
-      const itemText = query ? ` Bidhaa ninayotafuta ni: ${productSearch.value.trim()}.` : '';
-      emptyChatLink.href = `https://wa.me/255687602205?text=${encodeURIComponent(`Habari! Nimekosa bidhaa ninayoitaka kwenye website.${itemText} Naomba msaada wa kuipata.`)}`;
+      emptyChatLink.href = WM.wa.requestLink(productSearch?.value.trim());
     }
   }
 
@@ -143,17 +151,8 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
         const ic = document.createElement('i');
         // use the product category icon
-        const cat = wrap.closest('.pcard')?.dataset.cat || 'default';
-        const iconMap = {
-          audio: 'fa-solid fa-headphones',
-          aroma: 'fa-solid fa-wind',
-          Accessories: 'fa-solid fa-laptop',
-          light: 'fa-solid fa-lightbulb',
-          Computer: 'fa-solid fa-desktop',
-          storage: 'fa-solid fa-hard-drive',
-          default: 'fa-solid fa-box-open'
-        };
-        ic.className = iconMap[cat] || iconMap.default;
+        const cat = WM.catalog.category(wrap.closest('.pcard')?.dataset.cat);
+        ic.className = (cat && cat.icon) || 'fa-solid fa-box-open';
         ic.style.cssText = 'font-size:3rem;color:rgba(255,255,255,.25);';
         const txt = document.createElement('span');
         txt.textContent = 'Picha Inakuja';
@@ -202,7 +201,9 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ── SMOOTH SCROLL for anchor links ─────────────────────────── */
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
-      const target = document.querySelector(a.getAttribute('href'));
+      const href = a.getAttribute('href');
+      if (href.length < 2) return; // plain "#" links
+      const target = document.querySelector(href);
       if (!target) return;
       e.preventDefault();
       const offset = document.getElementById('navbar').offsetHeight + 12;
