@@ -1394,3 +1394,14 @@ body.cart-open { overflow: hidden; }
   .hb, .cat-card, .flt-chat { transition: none; animation: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
 }
+
+/* ================================================================
+   ACCESSIBILITY (Phase 5) — fallback keyboard focus for anything
+   without its own focus style (:where keeps specificity at zero)
+   ================================================================ */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 2px;
+}
+footer :where(a, button):focus-visible { outline-color: var(--accent); }
+.cat-btn:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
