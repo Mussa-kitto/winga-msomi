@@ -37,9 +37,9 @@
       map.set(p, sha);
     }
     // Pretend every image referenced by a product exists in the repo
-    const w = { WM: {} };
-    new Function('window', 'WM', S.blobs[map.get(DATA[0])].text)(w, w.WM); // eslint-disable-line no-new-func
-    w.WM.products.forEach(p => p.images.forEach(img => {
+    const t = S.blobs[map.get(DATA[0])].text; // read without eval (admin page runs under a strict CSP)
+    const products = JSON.parse(`[${t.slice(t.indexOf('WM.products = [') + 15, t.lastIndexOf('];')).replace(/,\s*$/, '')}]`);
+    products.forEach(p => p.images.forEach(img => {
       if (!map.has(img)) { const sha = id('blob'); S.blobs[sha] = { b64: 'AAAA' }; map.set(img, sha); }
     }));
     const tree = id('tree'); S.trees[tree] = map;

@@ -151,8 +151,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const fb = document.createElement('div');
       fb.style.cssText = 'position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#1a1a2e,#2d2d4e);gap:10px;';
       const cat = WM.catalog.category(wrap.closest('.pcard')?.dataset.cat);
-      fb.innerHTML = `<i class="${(cat && cat.icon) || 'fa-solid fa-box-open'}" style="font-size:3rem;color:rgba(255,255,255,.25)" aria-hidden="true"></i>
-        <span style="color:rgba(255,255,255,.3);font-size:.75rem;font-weight:600">Picha Inakuja</span>`;
+      // Built with DOM APIs (no HTML strings): safe and allowed by the CSP
+      const ic = document.createElement('i');
+      ic.className = (cat && cat.icon) || 'fa-solid fa-box-open';
+      ic.setAttribute('aria-hidden', 'true');
+      ic.style.cssText = 'font-size:3rem;color:rgba(255,255,255,.25)';
+      const tx = document.createElement('span');
+      tx.textContent = 'Picha Inakuja';
+      tx.style.cssText = 'color:rgba(255,255,255,.3);font-size:.75rem;font-weight:600';
+      fb.append(ic, tx);
       wrap.appendChild(fb);
     });
   });
