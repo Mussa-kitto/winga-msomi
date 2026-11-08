@@ -142,7 +142,7 @@ Make sure every active seller has a correct `whatsapp` number before you switch.
 - `showSold`: `true` shows sold products with an "Imeuzwa" badge, `false` hides them.
 - `messages`: every WhatsApp message text (Swahili). `{name}`, `{price}`, `{qty}`, `{total}` are filled in automatically.
 - `benefits`: the 4 items under the hero.
-- Home banners: `js/data/banners.js` (`priceFrom` computes "Kuanzia TZS ..." from the products).
+- Home banners: `js/data/banners.js`. Each banner names one `productId`; its picture, name, price and link come from `products.js` (never type prices there). If that product is sold/hidden, the cheapest available product of the banner's `category` is shown with "Kuanzia TZS ...". A wrong `productId` logs a `[WM data]` warning.
 
 ## Run locally
 

@@ -42,6 +42,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (metaDesc) metaDesc.setAttribute('content', `${p.name}: ${p.description}`);
 
   // Specs table: real product specs (if any) + facts we know from the data
+  // No specs -> the Vipimo/Specs tab is left out (no empty section)
+  const hasSpecs = (p.specs || []).length > 0;
   const facts = [
     // "Label: value" strings (or {label, value} objects)
     ...(p.specs || []).map(s => (typeof s === 'string' ? s.split(/:(.+)/).slice(0, 2) : [s.label, s.value]).map(x => String(x || '').trim())),
@@ -149,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <section class="pd-tabs">
       <div class="pd-tablist" role="tablist" aria-label="Maelezo ya bidhaa">
         <button type="button" role="tab" id="tab-desc" aria-controls="panel-desc" aria-selected="true">Maelezo</button>
-        <button type="button" role="tab" id="tab-specs" aria-controls="panel-specs" aria-selected="false" tabindex="-1">Vipimo / Specs</button>
+        ${hasSpecs ? '<button type="button" role="tab" id="tab-specs" aria-controls="panel-specs" aria-selected="false" tabindex="-1">Vipimo / Specs</button>' : ''}
         <button type="button" role="tab" id="tab-how" aria-controls="panel-how" aria-selected="false" tabindex="-1">Jinsi ya Kuagiza</button>
       </div>
 
@@ -158,14 +160,14 @@ document.addEventListener('DOMContentLoaded', () => {
         ${p.orderNote ? `<p class="pd-panel-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Ukiagiza: ${esc(p.orderNote.replace(/^\(|\)$/g, ''))}.</p>` : ''}
       </div>
 
+      ${hasSpecs ? `
       <div class="pd-panel" role="tabpanel" id="panel-specs" aria-labelledby="tab-specs" tabindex="0" hidden>
         <table class="pd-spec-table">
           <tbody>
             ${facts.map(([k, v]) => `<tr><th scope="row">${esc(k)}</th><td>${esc(v)}</td></tr>`).join('')}
           </tbody>
         </table>
-        ${(p.specs || []).length ? '' : '<p class="pd-panel-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Muuzaji hajaweka vipimo zaidi. Uliza kupitia "Chat na Muuzaji" kwa maelezo zaidi.</p>'}
-      </div>
+      </div>` : '<!-- no specs: the Vipimo/Specs tab is not shown -->'}
 
       <div class="pd-panel" role="tabpanel" id="panel-how" aria-labelledby="tab-how" tabindex="0" hidden>
         <ol class="pd-steps">

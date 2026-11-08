@@ -190,6 +190,36 @@ document.addEventListener('DOMContentLoaded', () => {
     scrollToEl(target);
   });
 
+  /* ── FLOATING BUTTON NEVER COVERS ANYTHING ───────────────────────
+     While the "Omba bidhaa / Uliza" button sits over a link, button,
+     input, product card or the cart toast, it fades out; it comes back
+     as soon as the space under it is clear. offsetLeft/Top ignore the
+     fade transform, so the check always uses the button's real place. */
+  const flt = document.querySelector('.flt-chat');
+  if (flt) {
+    const GAP = 8; // keep a little air around the button
+    const targets = 'main a[href], main button, main input, main select, main .pcard, footer a[href], .wm-toast.show';
+    let ticking = false;
+    const check = () => {
+      ticking = false;
+      const box = {
+        left: flt.offsetLeft - GAP, top: flt.offsetTop - GAP,
+        right: flt.offsetLeft + flt.offsetWidth + GAP, bottom: flt.offsetTop + flt.offsetHeight + GAP
+      };
+      if (!flt.offsetWidth) return; // hidden (e.g. cart drawer open)
+      const covered = [...document.querySelectorAll(targets)].some(el => {
+        if (el.closest('[hidden]')) return false;
+        const r = el.getBoundingClientRect();
+        return r.width && r.height && r.left < box.right && r.right > box.left && r.top < box.bottom && r.bottom > box.top;
+      });
+      flt.classList.toggle('flt-away', covered);
+    };
+    const queue = () => { if (!ticking) { ticking = true; requestAnimationFrame(check); } };
+    ['scroll', 'resize'].forEach(ev => window.addEventListener(ev, queue, { passive: true }));
+    window.addEventListener('wm:cart', () => { queue(); setTimeout(queue, 350); setTimeout(queue, 3900); }); // toast in/out
+    queue();
+  }
+
   /* ── COPY BUTTONS (Support number) ───────────────────────────── */
   document.querySelectorAll('[data-copy]').forEach(btn => {
     btn.addEventListener('click', async () => {
