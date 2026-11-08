@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="robots" content="noindex, nofollow"/>
+  <meta name="theme-color" content="#1A56DB"/>
+  <title>Admin | WINGA MSOMI</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+  <link rel="icon" type="image/svg+xml" href="../images/favicon.svg"/>
+  <link rel="stylesheet" href="../css/style.css"/>
+  <link rel="stylesheet" href="../css/admin.css"/>
+</head>
+<body class="adm-body">
+
+  <!-- ══════════ LOGIN ══════════ -->
+  <main id="loginView" class="adm-login" hidden>
+    <div class="adm-login-card">
+      <div class="adm-brand">
+        <div class="brand-icon" aria-hidden="true"><i class="fa-solid fa-user-graduate"></i><span class="brand-badge"><i class="fa-solid fa-cart-shopping"></i></span></div>
+        <div><strong>WINGA <em>MSOMI</em></strong><span>Sehemu ya Admin</span></div>
+      </div>
+
+      <form id="loginForm" class="adm-form" autocomplete="off">
+        <label class="adm-field">
+          <span>GitHub token</span>
+          <input id="loginToken" type="password" required spellcheck="false" placeholder="github_pat_..." autocomplete="off"/>
+        </label>
+        <details class="adm-more">
+          <summary>Mipangilio zaidi</summary>
+          <label class="adm-field"><span>Repository</span><input id="loginRepo" type="text" required spellcheck="false"/></label>
+          <label class="adm-field"><span>Branch</span><input id="loginBranch" type="text" required spellcheck="false"/></label>
+        </details>
+        <label class="adm-check"><input id="loginRemember" type="checkbox" checked/> Nikumbuke kwenye kifaa hiki</label>
+        <button type="submit" class="adm-btn adm-btn-primary adm-btn-block"><i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i> Ingia</button>
+        <p id="loginMsg" class="adm-msg" role="alert" hidden></p>
+      </form>
+
+      <details class="adm-help">
+        <summary><i class="fa-solid fa-circle-question" aria-hidden="true"></i> Jinsi ya kupata token (mara moja tu)</summary>
+        <ol>
+          <li>Ingia GitHub, fungua <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">Fine-grained token mpya</a>.</li>
+          <li><b>Token name:</b> Winga Msomi Admin. <b>Expiration:</b> chagua muda (mf. siku 90).</li>
+          <li><b>Repository access:</b> <i>Only select repositories</i> → <b>winga-msomi</b>.</li>
+          <li><b>Permissions → Repository permissions → Contents:</b> <i>Read and write</i>.</li>
+          <li>Bonyeza <b>Generate token</b>, nakili token, kisha ibandike hapo juu.</li>
+        </ol>
+        <p>Token inakaa kwenye kifaa hiki tu na inatumika kuongea na GitHub peke yake. Ukipoteza simu, ifute kwenye GitHub (Settings → Developer settings → Personal access tokens).</p>
+      </details>
+    </div>
+  </main>
+
+  <!-- ══════════ APP ══════════ -->
+  <div id="appView" hidden>
+    <header class="adm-top">
+      <div class="adm-top-wrap">
+        <div class="adm-brand adm-brand-sm">
+          <div class="brand-icon" aria-hidden="true"><i class="fa-solid fa-user-graduate"></i><span class="brand-badge"><i class="fa-solid fa-cart-shopping"></i></span></div>
+          <div><strong>WINGA <em>MSOMI</em></strong><span id="repoInfo">Admin</span></div>
+        </div>
+        <div class="adm-top-actions">
+          <a class="adm-btn adm-btn-ghost" href="../index.html" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i><span class="adm-hide-sm"> Tovuti</span></a>
+          <button type="button" class="adm-btn adm-btn-ghost" id="reloadBtn" aria-label="Pakia upya data"><i class="fa-solid fa-rotate" aria-hidden="true"></i></button>
+          <button type="button" class="adm-btn adm-btn-ghost" id="logoutBtn"><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i><span class="adm-hide-sm"> Toka</span></button>
+        </div>
+      </div>
+      <nav class="adm-tabs" role="tablist" aria-label="Sehemu za admin">
+        <button type="button" role="tab" id="tabProducts" aria-controls="panelProducts" aria-selected="true">Bidhaa <span id="countProducts" class="adm-count"></span></button>
+        <button type="button" role="tab" id="tabSellers" aria-controls="panelSellers" aria-selected="false" tabindex="-1">Wauzaji <span id="countSellers" class="adm-count"></span></button>
+      </nav>
+    </header>
+
+    <main class="adm-main">
+      <!-- Products -->
+      <section id="panelProducts" role="tabpanel" aria-labelledby="tabProducts">
+        <div class="adm-toolbar">
+          <label class="adm-search"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+            <span class="sr-only">Tafuta bidhaa</span>
+            <input id="productSearch" type="search" placeholder="Tafuta bidhaa..."/></label>
+          <select id="statusFilter" aria-label="Chuja kwa hali">
+            <option value="">Zote</option>
+            <option value="available">Inapatikana</option>
+            <option value="sold">Imeuzwa</option>
+            <option value="hidden">Imefichwa</option>
+          </select>
+          <button type="button" class="adm-btn adm-btn-primary" id="addProductBtn"><i class="fa-solid fa-plus" aria-hidden="true"></i> Ongeza bidhaa</button>
+        </div>
+        <ul id="productList" class="adm-list" aria-live="polite"></ul>
+      </section>
+
+      <!-- Sellers -->
+      <section id="panelSellers" role="tabpanel" aria-labelledby="tabSellers" hidden>
+        <div class="adm-toolbar">
+          <p class="adm-note">Muuzaji akiwekwa "Hayupo", bidhaa zake zote zinafichwa kwenye tovuti.</p>
+          <button type="button" class="adm-btn adm-btn-primary" id="addSellerBtn"><i class="fa-solid fa-plus" aria-hidden="true"></i> Ongeza muuzaji</button>
+        </div>
+        <ul id="sellerList" class="adm-list"></ul>
+      </section>
+    </main>
+  </div>
+
+  <!-- ══════════ PRODUCT EDITOR (dialog) ══════════ -->
+  <div id="productEditor" class="adm-sheet" role="dialog" aria-modal="true" aria-labelledby="peTitle" hidden>
+    <form id="productForm" class="adm-sheet-inner" novalidate>
+      <div class="adm-sheet-head">
+        <h2 id="peTitle">Bidhaa mpya</h2>
+        <button type="button" class="adm-icon-btn" data-close aria-label="Funga"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+      </div>
+
+      <div class="adm-sheet-body">
+        <fieldset class="adm-group">
+          <legend>Picha</legend>
+          <p class="adm-hint">Picha ya kwanza ndiyo inaonekana kwenye kadi. Picha kubwa zinapunguzwa zenyewe (≈1000px).</p>
+          <ul id="peImages" class="adm-images"></ul>
+          <label class="adm-drop">
+            <input id="peFiles" type="file" accept="image/*" multiple/>
+            <i class="fa-solid fa-camera" aria-hidden="true"></i>
+            <span>Ongeza picha (gusa hapa au buruta picha)</span>
+          </label>
+        </fieldset>
+
+        <fieldset class="adm-group">
+          <legend>Taarifa</legend>
+          <div class="adm-grid">
+            <label class="adm-field adm-span2"><span>Jina la bidhaa *</span><input id="peName" type="text" required maxlength="80"/></label>
+            <label class="adm-field adm-span2"><span>ID (kiungo) *</span><input id="peId" type="text" required pattern="[a-z0-9]+(-[a-z0-9]+)*" spellcheck="false"/>
+              <small id="peIdHint" class="adm-hint"></small></label>
+            <label class="adm-field"><span>Bei (TZS) *</span><input id="pePrice" type="number" inputmode="numeric" min="1" step="1" required/></label>
+            <label class="adm-field"><span>Bei ya zamani (hiari)</span><input id="peOldPrice" type="number" inputmode="numeric" min="1" step="1"/></label>
+            <label class="adm-field"><span>Aina *</span><select id="peCategory" required></select></label>
+            <label class="adm-field"><span>Muuzaji *</span><select id="peSeller" required></select></label>
+            <label class="adm-field"><span>Hali ya bidhaa</span>
+              <select id="peCondition"><option value="Mpya">Mpya</option><option value="Imetumika">Imetumika</option><option value="">Haijatajwa</option></select></label>
+            <label class="adm-field"><span>Inaonekana?</span>
+              <select id="peStatus"><option value="available">Inapatikana</option><option value="sold">Imeuzwa</option><option value="hidden">Imefichwa</option></select></label>
+            <label class="adm-field"><span>Alama (badge)</span>
+              <select id="peBadge"><option value="">Hakuna</option><option value="hot">Hot</option><option value="new">New</option><option value="sale">Moto</option><option value="popular">Popular</option></select></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="adm-group">
+          <legend>Maelezo</legend>
+          <label class="adm-field"><span>Maelezo *</span><textarea id="peDescription" rows="3" required maxlength="400"></textarea></label>
+          <label class="adm-field"><span>Vipimo / specs (moja kwa kila mstari, mf. <code>RAM: 8GB</code>)</span><textarea id="peSpecs" rows="4" spellcheck="false"></textarea></label>
+          <label class="adm-field"><span>Ujumbe wa ziada kwenye oda (hiari, mf. "(taja model ya simu yako)")</span><input id="peOrderNote" type="text" maxlength="80"/></label>
+        </fieldset>
+        <p id="peMsg" class="adm-msg" role="alert" hidden></p>
+      </div>
+
+      <div class="adm-sheet-foot">
+        <button type="button" class="adm-btn adm-btn-ghost" data-close>Ghairi</button>
+        <button type="submit" class="adm-btn adm-btn-primary" id="peSave"><i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i> Hifadhi</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- ══════════ SELLER EDITOR (dialog) ══════════ -->
+  <div id="sellerEditor" class="adm-sheet" role="dialog" aria-modal="true" aria-labelledby="seTitle" hidden>
+    <form id="sellerForm" class="adm-sheet-inner adm-sheet-sm" novalidate>
+      <div class="adm-sheet-head">
+        <h2 id="seTitle">Muuzaji mpya</h2>
+        <button type="button" class="adm-icon-btn" data-close aria-label="Funga"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+      </div>
+      <div class="adm-sheet-body">
+        <div class="adm-grid">
+          <label class="adm-field adm-span2"><span>Jina *</span><input id="seName" type="text" required maxlength="60"/></label>
+          <label class="adm-field adm-span2"><span>ID *</span><input id="seId" type="text" required pattern="[a-z0-9]+(-[a-z0-9]+)*" spellcheck="false"/></label>
+          <label class="adm-field adm-span2"><span>WhatsApp * (mf. 2557XXXXXXXX)</span><input id="seWhatsapp" type="tel" inputmode="numeric" required placeholder="2557XXXXXXXX"/></label>
+          <label class="adm-field adm-span2"><span>Mahali</span><input id="seArea" type="text" maxlength="60" placeholder="mf. UDOM-CIVE College, Dodoma"/></label>
+          <label class="adm-field adm-span2"><span>Maelezo mafupi</span><input id="seAbout" type="text" maxlength="80" placeholder="Muuzaji mwanafunzi wa UDOM"/></label>
+          <label class="adm-check adm-span2"><input id="seActive" type="checkbox" checked/> Yupo (bidhaa zake zinaonekana)</label>
+        </div>
+        <p id="seMsg" class="adm-msg" role="alert" hidden></p>
+      </div>
+      <div class="adm-sheet-foot">
+        <button type="button" class="adm-btn adm-btn-ghost" data-close>Ghairi</button>
+        <button type="submit" class="adm-btn adm-btn-primary" id="seSave"><i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i> Hifadhi</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- ══════════ CONFIRM (dialog, instead of window.confirm) ══════════ -->
+  <div id="confirmBox" class="adm-sheet" role="alertdialog" aria-modal="true" aria-labelledby="cfTitle" aria-describedby="cfText" hidden>
+    <div class="adm-sheet-inner adm-sheet-sm">
+      <div class="adm-sheet-body">
+        <h2 id="cfTitle">Una uhakika?</h2>
+        <p id="cfText"></p>
+        <label class="adm-check" id="cfOptWrap" hidden><input id="cfOpt" type="checkbox" checked/> <span id="cfOptText"></span></label>
+      </div>
+      <div class="adm-sheet-foot">
+        <button type="button" class="adm-btn adm-btn-ghost" id="cfNo">Hapana</button>
+        <button type="button" class="adm-btn adm-btn-danger" id="cfYes">Ndiyo, futa</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Status / progress -->
+  <div id="admToast" class="adm-toast" role="status" aria-live="polite" hidden></div>
+
+  <!-- Dev only: ?mock=1 on localhost uses a fake GitHub (tests/mock-github.js, not deployed) -->
+  <script>
+    if (/^(localhost|127\.0\.0\.1)$/.test(location.hostname) && /[?&]mock=1/.test(location.search)) {
+      document.write('<script src="../tests/mock-github.js"><\/script>');
+    }
+  </script>
+  <script src="../js/admin.js"></script>
+</body>
+</html>
