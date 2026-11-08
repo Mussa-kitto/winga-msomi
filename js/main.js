@@ -193,31 +193,59 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ── FLOATING BUTTON NEVER COVERS ANYTHING ───────────────────────
      While the "Omba bidhaa / Uliza" button sits over a link, button,
      input, product card or the cart toast, it fades out; it comes back
-     as soon as the space under it is clear. offsetLeft/Top ignore the
-     fade transform, so the check always uses the button's real place. */
+     as soon as the space under it is clear.
+     An IntersectionObserver watches only the small area under the button,
+     so the browser reports changes itself: no work on every scroll frame. */
   const flt = document.querySelector('.flt-chat');
-  if (flt) {
+  if (flt && 'IntersectionObserver' in window) {
     const GAP = 8; // keep a little air around the button
-    const targets = 'main a[href], main button, main input, main select, main .pcard, footer a[href], .wm-toast.show';
-    let ticking = false;
-    const check = () => {
-      ticking = false;
-      const box = {
-        left: flt.offsetLeft - GAP, top: flt.offsetTop - GAP,
-        right: flt.offsetLeft + flt.offsetWidth + GAP, bottom: flt.offsetTop + flt.offsetHeight + GAP
-      };
-      if (!flt.offsetWidth) return; // hidden (e.g. cart drawer open)
-      const covered = [...document.querySelectorAll(targets)].some(el => {
-        if (el.closest('[hidden]')) return false;
-        const r = el.getBoundingClientRect();
-        return r.width && r.height && r.left < box.right && r.right > box.left && r.top < box.bottom && r.bottom > box.top;
-      });
+    const TARGETS = 'main a[href], main button, main input, main select, main .pcard, footer a[href], .wm-toast';
+    const under = new Set(); // elements currently under the button
+    const toast = document.querySelector('.wm-toast');
+    let io = null;
+
+    const update = () => {
+      // The toast only counts while it is shown
+      const covered = [...under].some(el => el !== toast || toast.classList.contains('show'));
       flt.classList.toggle('flt-away', covered);
     };
-    const queue = () => { if (!ticking) { ticking = true; requestAnimationFrame(check); } };
-    ['scroll', 'resize'].forEach(ev => window.addEventListener(ev, queue, { passive: true }));
-    window.addEventListener('wm:cart', () => { queue(); setTimeout(queue, 350); setTimeout(queue, 3900); }); // toast in/out
-    queue();
+
+    // (Re)build the observer for the button's area; offsetLeft/Top ignore the fade transform
+    const watch = () => {
+      if (!flt.offsetWidth) return; // hidden (e.g. cart drawer open)
+      if (io) io.disconnect();
+      under.clear();
+      const vw = document.documentElement.clientWidth, vh = document.documentElement.clientHeight;
+      const top = flt.offsetTop - GAP, left = flt.offsetLeft - GAP;
+      const right = vw - (flt.offsetLeft + flt.offsetWidth + GAP), bottom = vh - (flt.offsetTop + flt.offsetHeight + GAP);
+      const onChange = entries => {
+        entries.forEach(en => (en.isIntersecting ? under.add(en.target) : under.delete(en.target)));
+        update();
+      };
+      const opts = { rootMargin: `${-top}px ${-right}px ${-bottom}px ${-left}px`, threshold: 0 };
+      // root: document = this page's own viewport (older browsers: implicit root)
+      try { io = new IntersectionObserver(onChange, Object.assign({ root: document }, opts)); }
+      catch (e) { io = new IntersectionObserver(onChange, opts); }
+      document.querySelectorAll(TARGETS).forEach(el => io.observe(el));
+    };
+
+    // Rebuild whenever the button's place/size can change: window resize, the
+    // button itself resizing (e.g. when the web font finishes loading), the
+    // scrollbar appearing, fonts ready, page fully loaded.
+    let timer;
+    const rewatch = () => { clearTimeout(timer); timer = setTimeout(watch, 120); };
+    window.addEventListener('resize', rewatch, { passive: true });
+    window.addEventListener('load', rewatch);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(rewatch);
+    if ('ResizeObserver' in window) {
+      let lastW = 0;
+      new ResizeObserver(() => {
+        const w = flt.offsetWidth + 'x' + document.documentElement.clientWidth;
+        if (w !== lastW) { lastW = w; rewatch(); } // ignore page height changes
+      }).observe(flt);
+    }
+    window.addEventListener('wm:cart', () => { setTimeout(update, 50); setTimeout(update, 3900); }); // toast in/out
+    watch();
   }
 
   /* ── COPY BUTTONS (Support number) ───────────────────────────── */
