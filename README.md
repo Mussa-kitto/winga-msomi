@@ -53,6 +53,16 @@ Test the admin locally without touching GitHub: run the local server, open `http
 
 You can still edit the data files by hand, as described below. The admin page reads and writes the same files.
 
+## Speed and caching
+
+- Everything is served from this site (fonts in `fonts/`, icons in `css/icons.css`): no outside servers.
+- Phones keep files so pages open fast the second time (`vercel.json`):
+  images 30 days, fonts 1 year, CSS/JS 1 day, `js/data/*` only 60 seconds (so admin changes show within a few minutes), HTML pages always fresh.
+- **When you change any file in `css/` or `js/` (not `js/data/`)**, change the version `?v=20261109` to a new value
+  (e.g. today's date) in `index.html`, `product.html` and `admin/index.html`, so phones fetch the new file at once.
+- To replace a photo, upload it with a **new file name** (the admin page does this automatically).
+- Keep photos at most ~1000 px and around 100 KB or less (the admin page resizes them for you).
+
 ## Security
 
 - **No secrets in this repository.** Phone numbers in `site.js`/`sellers.js` are public on purpose. Never commit tokens, passwords or `.env` files.
@@ -90,6 +100,7 @@ You can still edit the data files by hand, as described below. The admin page re
    | `status` | `"available"` (shown), `"sold"` (hidden, or shown as "Imeuzwa" if `showSold: true` in `site.js`), `"hidden"` |
    | `badge` | Optional: `"hot"`, `"new"`, `"sale"`, `"popular"` |
    | `orderNote` | Optional extra text added to the order message, e.g. `"(taja model ya simu yako)"` |
+   | `icon` | Optional card icon, e.g. `"fa-solid fa-bag-shopping"`. Use one that already exists in `css/icons.css` (any icon used on the site); otherwise leave it out and the category icon is used |
 
 3. Check it locally (see "Run locally"). Open the browser console: a `[WM data]` warning means a duplicate id, an unknown seller or category, no image listed, or a bad price. (A wrong image path shows a "Picha Inakuja" placeholder on the card.)
 4. Commit and push (see "How to deploy").
