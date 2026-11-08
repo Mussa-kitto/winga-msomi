@@ -106,7 +106,21 @@
   <main>
     <!-- ══════════════ HERO + BENEFITS (from js/data/banners.js and site.js) ══════════════ -->
     <section id="home" class="home-top" aria-label="Karibu Winga Msomi">
-      <div class="hero-grid" id="heroGrid"></div>
+      <!-- The headline (<h1>) and text live here in the HTML; js/render.js only fills in
+           the featured product (picture, name, price, link) from banners.js + products.js -->
+      <div class="hero-grid" id="heroGrid">
+        <a class="hb hb-main" id="heroMain" href="#products">
+          <div class="hb-text">
+            <span class="hb-kicker"><i class="fa-solid fa-user-graduate" aria-hidden="true"></i> Soko la wanafunzi wa UDOM</span>
+            <h1>Nunua kutoka kwa wauzaji <em>wanafunzi wenzako</em></h1>
+            <p>Laptop, audio, taa, storage na mengine mengi. Agiza moja kwa moja kupitia WhatsApp.</p>
+            <div data-hero-product></div>
+            <span class="hb-btn">Nunua sasa <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+          </div>
+          <div class="hb-img" data-hero-img></div>
+        </a>
+        <div class="hb-side" id="heroSide"></div>
+      </div>
       <div class="benefits" id="benefits" aria-label="Kwa nini Winga Msomi"></div>
     </section>
 

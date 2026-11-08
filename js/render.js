@@ -160,27 +160,24 @@ WM.render = (function () {
   }
   const priceHtml = bp => `<p class="hb-price">${bp.from ? 'Kuanzia ' : ''}<strong>TZS ${WM.wa.money(bp.p.price)}</strong></p>`;
 
-  // Hero: big banner + two small banners (js/data/banners.js)
+  /* Hero: the big banner's headline/text are static in index.html (so the page
+     always has its <h1>); here we only fill in the featured product, then draw
+     the two small banners. el = #heroGrid */
   function hero(el) {
     const b = WM.banners || {};
-    const h = b.hero;
-    const main = h && bannerProduct(h);
-    if (!main) return;
-    const mp = main.p;
     const tones = ['tone-blue', 'tone-orange'];
-    el.innerHTML = `
-      <a class="hb hb-main" href="${esc(productPage(mp))}">
-        <div class="hb-text">
-          ${h.kicker ? `<span class="hb-kicker"><i class="fa-solid fa-user-graduate" aria-hidden="true"></i> ${esc(h.kicker)}</span>` : ''}
-          <h1>${esc(h.title)}${h.highlight ? ` <em>${esc(h.highlight)}</em>` : ''}</h1>
-          ${h.subtitle ? `<p>${esc(h.subtitle)}</p>` : ''}
-          <p class="hb-product">${esc(mp.name)}</p>
-          ${priceHtml(main)}
-          <span class="hb-btn">${esc(h.button || 'Nunua sasa')} <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
-        </div>
-        <div class="hb-img"><img src="${esc(mp.images[0])}" alt="${esc(mp.alt || mp.name)}" width="340" height="340" fetchpriority="high"/></div>
-      </a>
-      <div class="hb-side">
+    const main = b.hero && bannerProduct(b.hero);
+    const mainLink = el.querySelector('#heroMain');
+    if (main && mainLink) {
+      const mp = main.p;
+      mainLink.href = productPage(mp);
+      el.querySelector('[data-hero-product]').innerHTML = `<p class="hb-product">${esc(mp.name)}</p>${priceHtml(main)}`;
+      el.querySelector('[data-hero-img]').innerHTML =
+        `<img src="${esc(mp.images[0])}" alt="${esc(mp.alt || mp.name)}" width="340" height="340" fetchpriority="high"/>`;
+    }
+    const side = el.querySelector('#heroSide');
+    if (!side) return;
+    side.innerHTML = `
         ${(b.side || []).slice(0, 2).map((s, i) => {
           const sp = bannerProduct(s);
           if (!sp) return '';
@@ -195,8 +192,7 @@ WM.render = (function () {
             </div>
             <div class="hb-img"><img src="${esc(sp.p.images[0])}" alt="${esc(sp.p.alt || sp.p.name)}" width="140" height="140" loading="lazy"/></div>
           </a>`;
-        }).join('')}
-      </div>`;
+        }).join('')}`;
   }
 
   // Benefits strip (site.js)
