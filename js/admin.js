@@ -177,7 +177,29 @@
   }
 
   // Image src: the deployed file, or GitHub (raw) for photos not deployed yet
-  function imgSrc(path) { return `../${path.split('/').map(encodeURIComponent).join('/')}`; }
+  // Photos saved in the last 15 min may not be deployed yet. Never ask the site for
+  // them then: a 404 for /images/* is cached by the browser for 30 days (vercel.json),
+  // which would keep the new photo broken on the home page in this browser.
+  const FRESH_KEY = 'wm-admin-fresh-images', FRESH_MS = 15 * 60 * 1000;
+  function freshMap() {
+    try {
+      const m = JSON.parse(localStorage.getItem(FRESH_KEY) || '{}'), now = Date.now();
+      Object.keys(m).forEach(k => { if (now - m[k] > FRESH_MS) delete m[k]; });
+      return m;
+    } catch (e) { return {}; }
+  }
+  function markFresh(paths) {
+    const m = freshMap();
+    paths.forEach(path => { m[path] = Date.now(); });
+    try { localStorage.setItem(FRESH_KEY, JSON.stringify(m)); } catch (e) { /* ignore */ }
+  }
+  const BLANK = 'data:image/gif;base64,R0lGODlhAQABAAAAACw=';
+  function imgSrc(path) {
+    if (freshMap()[path]) return state.isPrivate ? BLANK : rawSrc(path);
+    return `../${path.split('/').map(encodeURIComponent).join('/')}`;
+  }
+  // Paths still in use by any product or category (never delete these)
+  const usedImages = list => new Set([...list.flatMap(x => x.images || []), ...state.categories.map(c => c.image).filter(Boolean)]);
   function rawSrc(path) { return `https://raw.githubusercontent.com/${gh.owner}/${gh.repo}/${encodeURIComponent(gh.branch)}/${encPath(path)}`; }
   // One listener instead of inline onerror="" (inline handlers are blocked by the CSP)
   document.addEventListener('error', e => {
@@ -485,10 +507,11 @@
         if (!isNew && idx < 0) throw new Error('Bidhaa hii imefutwa kutoka kifaa kingine. Pakia upya.');
         if (isNew) list.push(cleanProduct(p)); else list[idx] = cleanProduct(p);
         // Delete removed photos only if no other product still uses them
-        const used = new Set(list.flatMap(x => x.images || []));
+        const used = usedImages(list);
         const deletes = removed.filter(path => !used.has(path) && path.startsWith('images/')).map(path => ({ path, delete: true }));
         return [{ path: FILES.products, text: writeArray(text, 'products', list) }, ...deletes];
       });
+      markFresh(blobs.map(b => b.path));
       closeSheet($('#productEditor'));
       await loadAll();
       done(commit);
@@ -511,7 +534,7 @@
       const commit = await gh.commit(`Admin: futa bidhaa "${p.name}"`, [], async head => {
         const text = await gh.readText(FILES.products, head);
         const list = parseData(text, 'products').filter(x => x.id !== id);
-        const used = new Set(list.flatMap(x => x.images || []));
+        const used = usedImages(list);
         const deletes = ans.opt ? (p.images || []).filter(path => !used.has(path) && path.startsWith('images/')).map(path => ({ path, delete: true })) : [];
         return [{ path: FILES.products, text: writeArray(text, 'products', list) }, ...deletes];
       });

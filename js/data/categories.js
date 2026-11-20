@@ -3,7 +3,7 @@
    One category per line in JSON style (the admin page reads this with JSON.parse). */
 window.WM = window.WM || {};
 WM.categories = [
-  {"key": "audio", "label": "Audio", "fullLabel": "Audio", "icon": "fa-solid fa-headphones", "image": "images/wired earphones 1.webp"},
+  {"key": "audio", "label": "Audio", "fullLabel": "Audio", "icon": "fa-solid fa-headphones", "image": "images/headphone 1.webp"},
   {"key": "aroma", "label": "Aroma", "fullLabel": "Aroma & Wellness", "icon": "fa-solid fa-wind", "image": "images/charcoal 1.webp"},
   {"key": "accessories", "label": "Accessories", "fullLabel": "Accessories", "icon": "fa-solid fa-laptop", "image": "images/laptop table.jpg"},
   {"key": "light", "label": "Lights", "fullLabel": "Lights & Photo", "icon": "fa-solid fa-lightbulb", "image": "images/sunset lamp.jpg"},
