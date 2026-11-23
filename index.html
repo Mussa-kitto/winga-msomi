@@ -249,10 +249,20 @@
               <li><i class="fa-solid fa-check" aria-hidden="true"></i> Mnunuzi ataruhusiwa kukagua bidhaa kabla ya kulipa.</li>
               <li><i class="fa-solid fa-check" aria-hidden="true"></i> Utatujulisha bidhaa ikiuzwa ili tuiondoe.</li>
             </ul>
-            <a href="#" data-wa="sell" class="btn-big-wa" target="_blank" rel="noopener">
-              <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Tuma bidhaa yako WhatsApp
-            </a>
-            <p class="small-note">Ujumbe ulioandaliwa utafunguka WhatsApp. Jaza taarifa zako kisha tuma picha.</p>
+            <form id="sellForm" class="sell-form" novalidate>
+              <h3><i class="fa-solid fa-address-card" aria-hidden="true"></i> Jisajili kama muuzaji</h3>
+              <div class="sf-grid">
+                <label>Jina lako<input name="jina" required maxlength="60" autocomplete="name" placeholder="mf. Asha Juma"></label>
+                <label>Chuo / Hostel<input name="mahali" required maxlength="60" placeholder="mf. CIVE, Block 4"></label>
+                <label class="sf-wide">Bidhaa<input name="bidhaa" required maxlength="80" placeholder="mf. Rechargeable desk lamp"></label>
+                <label>Bei (TZS)<input name="bei" required inputmode="numeric" maxlength="10" placeholder="mf. 25000"></label>
+                <label>Hali<select name="hali"><option>Mpya</option><option>Imetumika</option></select></label>
+                <label class="sf-wide">Maelezo mafupi (si lazima)<textarea name="maelezo" rows="2" maxlength="300" placeholder="Rangi, ukubwa, sifa zake..."></textarea></label>
+              </div>
+              <p class="sf-err" id="sellErr" role="alert" hidden>Tafadhali jaza jina, mahali, bidhaa na bei.</p>
+              <button type="submit" class="btn-big-wa"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Tuma kupitia WhatsApp</button>
+            </form>
+            <p class="small-note">Taarifa zako zitafunguka WhatsApp tayari zimeandikwa. Kisha tuma picha 2–4 za bidhaa. <a href="#" data-wa="sell" target="_blank" rel="noopener">Au tuma bila fomu</a>.</p>
           </div>
         </div>
       </div>
@@ -393,7 +403,9 @@
   <script src="js/store.js?v=20261109"></script>
   <script src="js/header.js?v=20261109"></script>
   <script src="js/main.js?v=20261109"></script>
+  <script src="js/sell.js?v=20261123"></script>
   <!-- Vercel Web Analytics (no cookies; same-origin, allowed by the CSP) -->
+  <script src="js/analytics.js?v=20261123"></script>
   <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
