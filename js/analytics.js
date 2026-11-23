@@ -16,3 +16,32 @@
     return event;
   });
 })();
+
+/* Count WhatsApp clicks. Custom events need a paid plan, so each click is sent as a
+   virtual page view: /whatsapp/oda/<id>, /whatsapp/uliza/<id>, /whatsapp/uza, /whatsapp/<other>.
+   In the dashboard, open Pages and filter "/whatsapp" to see orders per product. */
+(function () {
+  function kindFor(a, text) {
+    if (a.closest('[data-wa="sell"], #sellForm')) return 'uza';
+    if (/Naomba maelezo zaidi/.test(text)) return 'uliza';
+    if (/^(Nataka |Habari! Nataka kuagiza)/.test(text)) return 'oda';
+    return a.dataset.wa || 'mawasiliano';
+  }
+  function track(href, a) {
+    try {
+      var u = new URL(href, location.href);
+      if (!/(^|\.)wa\.me$|whatsapp\.com$/.test(u.hostname)) return;
+      var text = u.searchParams.get('text') || '';
+      var kind = kindFor(a, text);
+      var m = text.match(/product\.html\?id=([^\s&]+)/);
+      var path = '/whatsapp/' + kind + (m ? '/' + decodeURIComponent(m[1]) : '');
+      if (window.va) window.va('pageview', { route: path, path: path });
+    } catch (e) { /* never block the click */ }
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (a) track(a.href, a);
+  }, true);
+  window.WM = window.WM || {};
+  window.WM.trackWa = track;
+})();

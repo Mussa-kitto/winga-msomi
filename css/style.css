@@ -1438,3 +1438,19 @@ body.cart-open .flt-chat { display: none; }
 .hb .hb-label { margin: 0 0 4px; font-size: .72rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--blue); }
 .hb-small.tone-orange .hb-label { color: #c2410c; }
 .hb-small h2 { font-size: 1.05rem; }
+
+/* ── Uza Nasi seller form ── */
+.sell-form { margin-top: 22px; padding-top: 18px; border-top: 1px dashed #fed7aa; }
+.sf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0 14px; }
+.sf-grid label { display: flex; flex-direction: column; gap: 6px; font-size: .82rem; font-weight: 600; color: var(--mid); }
+.sf-grid label span { font-weight: 400; color: var(--muted); }
+.sf-grid .sf-wide { grid-column: 1 / -1; }
+.sf-grid input, .sf-grid select, .sf-grid textarea {
+  font: inherit; font-weight: 400; font-size: .95rem; color: var(--dark);
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; background: var(--white);
+}
+.sf-grid textarea { resize: vertical; }
+.sf-grid input:focus, .sf-grid select:focus, .sf-grid textarea:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px var(--blue-soft); }
+.sell-form .btn-big-wa { width: 100%; border: 0; cursor: pointer; font: inherit; }
+.sf-err { color: #b91c1c; font-size: .85rem; margin: -4px 0 10px; }
+@media (max-width: 520px) { .sf-grid { grid-template-columns: 1fr; } }
