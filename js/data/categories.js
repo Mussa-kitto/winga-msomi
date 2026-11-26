@@ -9,5 +9,6 @@ WM.categories = [
   {"key": "light", "label": "Lights", "fullLabel": "Lights & Photo", "icon": "fa-solid fa-lightbulb", "image": "images/sunset lamp.jpg"},
   {"key": "computer", "label": "Computer", "fullLabel": "Computer", "icon": "fa-solid fa-desktop", "image": "images/hp elitebook.webp"},
   {"key": "storage", "label": "Storage", "fullLabel": "Storage", "icon": "fa-solid fa-hard-drive", "image": "images/flash disk 2.webp"},
-  {"key": "electronics", "label": "Electronics", "fullLabel": "Electronics", "icon": "fa-solid fa-plug-circle-bolt", "image": "images/iron 1.jpg"}
+  {"key": "electronics", "label": "Electronics", "fullLabel": "Electronics", "icon": "fa-solid fa-plug-circle-bolt", "image": "images/iron 1.jpg"},
+  {"key": "watch", "label": "Saa", "fullLabel": "Saa Janja & Zawadi", "icon": "fa-solid fa-clock", "image": "images/winga-msomi/t800-ultra-1.jpg"}
 ];
